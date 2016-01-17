@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HCIApp</string>
+    <string name="hello_world">Eres una cerdita :)</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_create_reminder">CreateReminderActivity</string>
+    <string name="title_activity_view_reminder">ViewReminderActivity</string>
+</resources>
