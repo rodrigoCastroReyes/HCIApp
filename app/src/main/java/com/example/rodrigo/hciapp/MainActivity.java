@@ -19,13 +19,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = new Intent(this, AdviceService.class);
+        startService(intent);
     }
 
     public void createNewReminder(View v){
-        //Intent intent = new Intent(this,CreateReminderActivity.class);
-        //startActivity(intent);
-        Intent intent = new Intent(this, AlarmService.class);
-        startService(intent);
+        Intent intent = new Intent(this,CreateReminderActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -49,20 +49,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void launchNotification(String title,String msg){
-        Intent resultIntent = new Intent(this, ViewReminderActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this,(int) System.currentTimeMillis(), resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.notification)
-                .setContentTitle(title)
-                .setContentText(msg);
-        mBuilder.setContentIntent(resultPendingIntent);
-        NotificationManager mNotifyMgr = (NotificationManager)getSystemService(this.NOTIFICATION_SERVICE);
-
-        int mNotificationId = (int) System.currentTimeMillis();//save id of current notification
-
-        mNotifyMgr.notify(mNotificationId,mBuilder.build());
-    }
-
 }

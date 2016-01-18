@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import com.example.rodrigo.hciapp.R;
 import com.example.rodrigo.hciapp.ViewReminderActivity;
@@ -15,31 +16,27 @@ import android.app.Notification;
 public class NotificationHelper {
     private Context context;
     private NotificationManager mNotifyMgr;
-    private String title, msg;
     private int mNotificationId;
-    private Class resultActivityClass;
+    private Intent resultIntent;
 
-    public NotificationHelper(Context context,Class actionClass,String title,String msg){
-        this.context = context;
+    public NotificationHelper(Context context,Intent resultIntent){
         mNotifyMgr = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
-        this.title = title;
-        this.msg = msg;
-        this.resultActivityClass = actionClass;
+        this.context = context;
+        this.resultIntent = resultIntent;
     }
 
     public Notification create(){
-        Intent resultIntent = new Intent(context,resultActivityClass);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(context,(int) System.currentTimeMillis(), resultIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        Bundle data = resultIntent.getExtras();
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.notification)
-                .setContentTitle(title)
-                .setContentText(msg);
+                .setContentTitle(data.getString("Title"))
+                .setContentText(data.getString("Message"));
         mBuilder.setContentIntent(resultPendingIntent);
         return mBuilder.build();
     }
 
-    public void launch(){
-        //launchNotificatio
+    public void launch(){//launch Notification
         mNotificationId = (int) System.currentTimeMillis();//save id of current notification
         mNotifyMgr.notify(mNotificationId,this.create());
     }

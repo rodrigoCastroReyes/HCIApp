@@ -6,6 +6,14 @@
         android:name="android.hardware.camara"
         android:required="true" />
 
+    <permission
+        android:name="com.vogella.android.locationapi.maps.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -37,8 +45,22 @@
             android:name=".ViewReminderActivity"
             android:label="@string/title_activity_view_reminder" >
         </activity>
-        <service android:name=".Services.AdviceService" android:exported = "false" android:enabled="true"/>
-        <service android:name=".Services.AlarmService" android:exported = "false" android:enabled="true"/>
+
+        <service
+            android:name=".Services.AdviceService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".Services.AlarmService"
+            android:enabled="true"
+            android:exported="false" />
+        <activity
+            android:name=".AdviceActivity"
+            android:label="@string/title_activity_advice" >
+        </activity>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyCoki9qVPDCVYtAojF_nbRf8-UiMhSAjBE" />
     </application>
 
 </manifest>

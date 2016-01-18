@@ -83,14 +83,14 @@ public class AlarmService extends Service {
     }
 
     private class NotificationTask implements Runnable{
-        private String title,msg;
         private long delay;
         private Context context;
+        private Intent intent;
 
         public NotificationTask(Context context,Bundle data){
             this.context = context;
-            this.title = data.getString("Title");
-            this.msg =  data.getString("Message");
+            this.intent = new Intent(context,ViewReminderActivity.class);
+            this.intent.putExtras(data);
             this.delay = data.getLong("Delay");
         }
 
@@ -101,7 +101,7 @@ public class AlarmService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            NotificationHelper notificationHelper = new NotificationHelper(context, ViewReminderActivity.class,title,msg);
+            NotificationHelper notificationHelper = new NotificationHelper(context,intent);
             notificationHelper.launch();
         }
     }
