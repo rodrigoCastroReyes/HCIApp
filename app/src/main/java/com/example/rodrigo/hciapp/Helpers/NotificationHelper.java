@@ -20,7 +20,7 @@ public class NotificationHelper {
     private Class resultActivityClass;
 
     public NotificationHelper(Context context,Class actionClass,String title,String msg){
-        context = context;
+        this.context = context;
         mNotifyMgr = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
         this.title = title;
         this.msg = msg;

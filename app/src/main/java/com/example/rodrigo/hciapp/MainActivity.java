@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public void createNewReminder(View v){
         //Intent intent = new Intent(this,CreateReminderActivity.class);
         //startActivity(intent);
-        Intent intent = new Intent(this, AdviceService.class);
+        Intent intent = new Intent(this, AlarmService.class);
         startService(intent);
     }
 

@@ -10,7 +10,11 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.example.rodrigo.hciapp.Helpers.NotificationHelper;
+import com.example.rodrigo.hciapp.Model.Reminder;
 import com.example.rodrigo.hciapp.ViewReminderActivity;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 
 public class AlarmService extends Service {
@@ -34,21 +38,26 @@ public class AlarmService extends Service {
         return null;
     }
 
-    private class ManagerThread extends Thread{
+    private class ManagerThread extends Thread {
         private NotificationThread notificationThread;
-
+        private Queue <Reminder> activeReminders ;
         public ManagerThread(Context context){
             notificationThread = new NotificationThread(context,"Notification Thread");
             notificationThread.start();
             notificationThread.prepareHandler();
         }
 
-        public void run(){
-            Bundle bundle = new Bundle();
-            bundle.putString("Title","Hello from a thread");
-            bundle.putString("Message","hola mundo");
-            bundle.putLong("Delay", 2 * 60 * 1000);
-            notificationThread.sheduleTask(bundle);
+        public void run() {
+            activeReminders = new ArrayDeque();
+            Reminder reminder;
+            while (true) {
+                reminder = activeReminders.poll();
+                if (reminder.isForToday()){
+                    notificationThread.sheduleTask(reminder.getData());
+                }else {
+                    activeReminders.add(reminder);
+                }
+            }
         }
 
     }
@@ -61,7 +70,7 @@ public class AlarmService extends Service {
         public NotificationThread(Context context,String name) {
             super(name);
             this.context = context;
-        }
+    }
 
         public void prepareHandler(){
             mWorkerHandler = new Handler(getLooper());
