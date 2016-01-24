@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Remember</string>
+    <string name="app_name">HCIApp</string>
     <string name="hello_world">Eres una cerdita :)</string>
     <string name="action_notifications">Last Reminders</string>
     <string name="action_settings">Settings</string>

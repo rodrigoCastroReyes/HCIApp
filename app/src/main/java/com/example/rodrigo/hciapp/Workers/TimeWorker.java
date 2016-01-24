@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.rodrigo.hciapp.R;
@@ -36,7 +37,7 @@ public class TimeWorker implements Worker{
     public void resolveTask(Bundle result) {
         this.hourOfDay = result.getInt("HourOfDay");
         this.minute = result.getInt("Minute");
-        EditText v = (EditText) this.activity.findViewById(R.id.editText2);
+        TextView v = (TextView) this.activity.findViewById(R.id.viewInputHour);
         v.setText("" + hourOfDay + minute);
     }
 

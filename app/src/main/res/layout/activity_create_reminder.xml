@@ -3,9 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.rodrigo.hciapp.CreateReminderActivity">
+    tools:context="com.example.rodrigo.hciapp.CreateReminderActivity"
+    android:background="#eceaea">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
+        android:id="@+id/toolbarCreateReminder"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
@@ -21,120 +22,311 @@
         android:layout_height="match_parent"
         android:id="@+id/wrapper"
         android:orientation="vertical"
-        android:layout_below="@+id/my_toolbar">
+        android:background="#eceaea"
+        android:layout_below="@+id/toolbarCreateReminder"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnCreateNewReminder"
+        android:weightSum="1">
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/wrapperTitulo"
-            android:orientation="horizontal"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp">
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff"
+            android:elevation="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="0.30">
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:id="@+id/inputTitle"
-                android:hint="Ingresar Titulo"
+                android:hint="Titulo"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wrapperNotes"
-            android:orientation="horizontal"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp">
+                android:theme="@style/EditTextTheme"
+                android:layout_weight="0.5"
+                android:layout_margin="4dp" />
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
                 android:id="@+id/inputNotes"
                 android:hint="Notas"
                 android:layout_below="@+id/inputTitle"
                 android:inputType="text|textMultiLine"
                 android:layout_alignStart="@+id/inputTitle"
-                android:layout_gravity="center_horizontal" />
+                android:theme="@style/EditTextTheme"
+                android:layout_weight="0.5"
+                android:layout_margin="4dp" />
         </LinearLayout>
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/wrapperNotes"
+            android:orientation="horizontal"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="#fff">
+
+        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:id="@+id/wrapperParameters"
             android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#fff"
+            android:elevation="5dp"
+            android:layout_weight="0.35"
+            android:layout_marginBottom="8dp">
 
-            <Button
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="calendar"
-                android:id="@+id/btnInputCalendar"
-                android:onClick="setCalendar"
-                android:layout_below="@+id/inputNotes"
-                android:layout_centerHorizontal="true" />
+                android:id = "@+id/wrapperDate"
+                android:layout_weight="0.33"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginLeft="4dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hour"
-                android:id="@+id/btnInputHour"
-                android:onClick="setTime"
-                android:layout_below="@+id/editText"
-                android:layout_alignStart="@+id/btnInputCalendar" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Fecha"
+                    android:id="@+id/textView4"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
 
-            <Button
-                android:layout_width="wrap_content"
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="calendar"
+                    android:id="@+id/btnInputCalendar"
+                    android:onClick="setCalendar"
+                    android:layout_below="@+id/inputNotes"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/roundedbutton"
+                    android:src="@drawable/ic_today_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/viewInputDate"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Notifications"
-                android:id="@+id/btnNotifications"
-                android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/btnInputHour" />
+                android:id = "@+id/wrapperHour"
+                android:layout_weight="0.33"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Hora"
+                    android:id="@+id/textView5"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hour"
+                    android:id="@+id/btnInputHour"
+                    android:onClick="setTime"
+                    android:layout_below="@+id/editText"
+                    android:layout_alignStart="@+id/btnInputCalendar"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/roundedbutton"
+                    android:src="@drawable/ic_schedule_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/viewInputHour"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id = "@+id/wrapperNotifications"
+                android:layout_weight="0.33"
+                android:orientation="vertical"
+                android:elevation="5dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Alarma"
+                    android:id="@+id/textView6"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Notifications"
+                    android:id="@+id/btnNotifications"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/btnInputHour"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/roundedbutton"
+                    android:src="@drawable/ic_notifications_white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Small Text"
+                    android:id="@+id/viewInputNotification"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#fff"
+        android:elevation="5dp"
+        android:layout_weight="0.30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Opcional:"
+            android:id="@+id/textView"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/wrapperSensors"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/wrapperCamera"
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Tomar foto"
+                    android:id="@+id/textView2"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Take Photo"
+                    android:id="@+id/btnTakePhoto"
+                    android:onClick="takePhotoHandle"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/roundedbutton"
+                    android:src="@drawable/ic_camera"
+                    android:layout_marginBottom="2dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/wrapperVoiceNote"
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Grabar Voz"
+                    android:id="@+id/textView3"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="4dp" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tomar foto"
+                    android:id="@+id/btnCreateVoiceNote"
+                    android:onClick="recordVoiceNoteHandle"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/btnInputHour"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_settings_voice"
+                    android:background="@drawable/roundedbutton"
+                    android:layout_marginBottom="2dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/wrapperSensors"
-        android:orientation="horizontal">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Take Photo"
-            android:id="@+id/btnTakePhoto"
-            android:onClick="takePhotoHandle"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voice Note"
-            android:id="@+id/btnCreateVoiceNote"
-            android:onClick="recordVoiceNoteHandle"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/btnInputHour" />
-
-    </LinearLayout>
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_below="@+id/btnInputCalendar"
-            android:layout_toEndOf="@+id/inputNotes" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText2"
-            android:layout_above="@+id/btnTakePhoto"
-            android:layout_alignStart="@+id/editText"
-            android:layout_marginBottom="66dp" />
-
-
-    </LinearLayout>
+        android:id="@+id/btnCreateNewReminder"
+        android:onClick=""
+        android:layout_alignWithParentIfMissing="false"
+        app:elevation="10dp"
+        app:backgroundTint = "#2196f3"
+        android:src="@drawable/ic_action_tick"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
 
 </RelativeLayout>

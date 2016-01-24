@@ -7,8 +7,11 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.rodrigo.hciapp.R;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 
@@ -37,7 +40,7 @@ public class DateWorker implements Worker {
         this.year = result.getInt("Year");
         this.monthOfYear = result.getInt("MonthOfYear");
         this.dayOfMonth = result.getInt("DayOfMonth");
-        EditText v = (EditText) this.activity.findViewById(R.id.editText);
+        TextView v = (TextView) this.activity.findViewById(R.id.viewInputDate);
         v.setText("" + year + " " + monthOfYear + " " + dayOfMonth);
     }
 

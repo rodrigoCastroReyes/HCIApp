@@ -2,8 +2,11 @@ package com.example.rodrigo.hciapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import static android.graphics.Color.rgb;
 
 public class ViewReminderActivity extends AppCompatActivity {
 

@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         myToolbar.setTitleTextColor(rgb(255, 255, 255));
-
         setSupportActionBar(myToolbar);
 
         ListView elements = (ListView) this.findViewById(R.id.listViewReminder);
