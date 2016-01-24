@@ -14,6 +14,7 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_alignParentBottom="true"
-        android:layout_weight="0.94" />
+        android:layout_weight="0.94"
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>

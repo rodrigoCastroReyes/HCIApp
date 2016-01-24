@@ -108,4 +108,3 @@ public class AdviceService extends Service {
 
 }
 
-
