@@ -22,10 +22,35 @@ public class TimeWorker implements Worker{
     private Activity activity;
     private int codeTask;
     private int hourOfDay,minute;
+    private String time;
 
     public TimeWorker(Activity activity,int code){
         timeFragment = new TimePickerFragment();
         this.activity = activity;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
+    public int getHourOfDay() {
+        return hourOfDay;
+    }
+
+    public void setHourOfDay(int hourOfDay) {
+        this.hourOfDay = hourOfDay;
     }
 
     @Override
@@ -38,7 +63,8 @@ public class TimeWorker implements Worker{
         this.hourOfDay = result.getInt("HourOfDay");
         this.minute = result.getInt("Minute");
         TextView v = (TextView) this.activity.findViewById(R.id.viewInputHour);
-        v.setText("" + hourOfDay + minute);
+        time = "" + hourOfDay + ":" + minute + ":00";
+        v.setText(time);
     }
 
     @Override

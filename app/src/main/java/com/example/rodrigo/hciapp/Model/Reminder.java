@@ -1,8 +1,11 @@
 package com.example.rodrigo.hciapp.Model;
 
 import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.support.design.widget.TabLayout;
 import android.text.format.Time;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -11,11 +14,16 @@ import java.util.GregorianCalendar;
  * Created by rodrigo on 17/01/16.
  */
 public class Reminder {
-    private int idReminder;
+    private static int ReminderID = 1;
+    private long idReminder;
     private String title,notes;
     private GregorianCalendar date;
     private int daysAfter,hourRange;
     private State state;
+
+    public Reminder(){
+        this.state =  State.PENDING;
+    }
 
     public Reminder(String title, String notes, GregorianCalendar date,int daysAfter,int hourRange){
         this.title = title;
@@ -26,11 +34,7 @@ public class Reminder {
         this.state =  State.PENDING;
     }
 
-    public int getIdReminder() {
-        return idReminder;
-    }
-
-    public void setIdReminder(int idReminder) {
+    public void setIdReminder(long idReminder) {
         this.idReminder = idReminder;
     }
 
@@ -86,6 +90,11 @@ public class Reminder {
         return true;
     }
 
+    public String getDateToString(){
+        return ""+ date.get(Calendar.YEAR) + "/" + date.get(Calendar.MONTH) + "/" +date.get(Calendar.DAY_OF_MONTH) + " " +
+                date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE) + ":00";
+    }
+
     public Bundle getData(){
         Bundle data = new Bundle();
         data.putString("Title",this.title);
@@ -94,4 +103,29 @@ public class Reminder {
         return data;
     }
 
+    public static abstract class ReminderEntry implements BaseColumns {
+        public static final String TABLE_NAME = "Reminder";
+        public static final String COLUMN_ENTRY_ID = "reminderid";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_NOTES= "notes";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_DAYS_AFTER = "daysAfter";
+        public static final String COLUMN_HOUR_RANGE = "hourRange";
+        public static final String COLUMN_ESTADO = "estado";
+
+        public static final int INDEX_ENTRY_ID = 0;
+        public static final int INDEX_TITLE = 1;
+        public static final int INDEX_NOTES= 2;
+        public static final int INDEX_DATE = 3;
+        public static final int INDEX_DAYS_AFTER = 4;
+        public static final int INDEX_HOUR_RANGE = 5;
+        public static final int INDEX_ESTADO = 6;
+
+        public static final String DATABASE_CREATE = "create table if not exists "
+                + TABLE_NAME + " (" + COLUMN_ENTRY_ID + " integer primary key autoincrement, "
+                + COLUMN_TITLE + " text, " + COLUMN_NOTES + " text, " + COLUMN_DATE + " text," +
+                COLUMN_DAYS_AFTER  + " integer, " + COLUMN_HOUR_RANGE  + " integer, " +
+                COLUMN_ESTADO + " text)";
+        public static final String DATABASE_DELETE = "drop table if exists " + TABLE_NAME;
+    }
 }

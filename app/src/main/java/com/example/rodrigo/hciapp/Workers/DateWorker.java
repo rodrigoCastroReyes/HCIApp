@@ -23,11 +23,44 @@ public class DateWorker implements Worker {
     private Activity activity;
     private int codeTask;
     private int year,monthOfYear,dayOfMonth;
+    private String date;
 
     public DateWorker(Activity activity,int code){
         dateFragment = new DatePickerFragment();
         this.activity = activity;
         this.codeTask = code;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public void setDayOfMonth(int dayOfMonth) {
+        this.dayOfMonth = dayOfMonth;
+    }
+
+    public int getMonthOfYear() {
+        return monthOfYear;
+    }
+
+    public void setMonthOfYear(int monthOfYear) {
+        this.monthOfYear = monthOfYear;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     @Override
@@ -41,7 +74,8 @@ public class DateWorker implements Worker {
         this.monthOfYear = result.getInt("MonthOfYear");
         this.dayOfMonth = result.getInt("DayOfMonth");
         TextView v = (TextView) this.activity.findViewById(R.id.viewInputDate);
-        v.setText("" + year + " " + monthOfYear + " " + dayOfMonth);
+        date = "" + year + "/" + monthOfYear + "/" + dayOfMonth;
+        v.setText(date);
     }
 
     @Override
