@@ -13,7 +13,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+
+import static java.util.Collections.*;
 
 /**
  * Created by rodrigo on 24/01/16.
@@ -43,6 +47,16 @@ public class DBOperations {
         values.put(Reminder.ReminderEntry.COLUMN_DAYS_AFTER,reminder.getDaysAfter());
         values.put(Reminder.ReminderEntry.COLUMN_HOUR_RANGE,reminder.getHourRange());
         values.put(Reminder.ReminderEntry.COLUMN_ESTADO, reminder.getState().toString());
+        if(reminder.getPhotoPath()!=null) {
+            values.put(Reminder.ReminderEntry.COLUMN_PHOTO_PATH, reminder.getPhotoPath());
+        }else{
+            values.putNull(Reminder.ReminderEntry.COLUMN_PHOTO_PATH);
+        }
+        if(reminder.getVoiceNotePath()!=null){
+            values.put(Reminder.ReminderEntry.COLUMN_VOICE_NOTE_PATH, reminder.getVoiceNotePath());
+        }else{
+            values.putNull(Reminder.ReminderEntry.COLUMN_VOICE_NOTE_PATH);
+        }
         return values;
     }
 
@@ -61,8 +75,13 @@ public class DBOperations {
                     String date = cursor.getString(Reminder.ReminderEntry.INDEX_DATE);
                     GregorianCalendar gregorianCalendar = DateUtils.parserStringDate(date);
                     reminder.setDate(gregorianCalendar);
+                    String s = reminder.getDateToString();
                     reminder.setDaysAfter(cursor.getInt(Reminder.ReminderEntry.INDEX_DAYS_AFTER));
                     reminder.setHourRange(cursor.getInt(Reminder.ReminderEntry.INDEX_HOUR_RANGE));
+                    String photoPath = cursor.getString(Reminder.ReminderEntry.INDEX_PHOTO_PATH);
+                    String voiceNotePath = cursor.getString(Reminder.ReminderEntry.INDEX_VOICE_NOTE_PATH);
+                    reminder.setPhotoPath(photoPath);
+                    reminder.setVoiceNotePath(voiceNotePath);
                     reminders.add(reminder);
                     cursor.moveToNext();
                 }
@@ -70,6 +89,8 @@ public class DBOperations {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        Collections.sort(reminders);
+        Collections.reverse(reminders);
         return reminders;
     }
 

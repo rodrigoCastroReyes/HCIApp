@@ -24,6 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, SCHEME_VERSION);
         database = this.getWritableDatabase();
         context = context;
+        //database.execSQL("drop table Reminder ");
     }
 
     public void onCreate(SQLiteDatabase db) {

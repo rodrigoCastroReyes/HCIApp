@@ -1,6 +1,8 @@
 package com.example.rodrigo.hciapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +30,7 @@ public class CreateReminderActivity extends AppCompatActivity {
     private Worker cameraWorker,recorderWorker,timeWorker,dateWorker;
     private DBOperations dbOperations;
     private EditText inputTitle,inputNotes;
+    private String photoPath  = null;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_RECORD_VOICENOTE = 2;
     static final int REQUEST_GET_TIME = 3;
@@ -63,7 +66,6 @@ public class CreateReminderActivity extends AppCompatActivity {
             }
         });
         setSupportActionBar(toolbar);
-
     }
 
     @Override
@@ -102,11 +104,29 @@ public class CreateReminderActivity extends AppCompatActivity {
         daysAfter = 1;
         hourRange = 12;
         Reminder reminder = new Reminder(title,notes,new GregorianCalendar(year,month,day,hour,minute),daysAfter,hourRange);
+        String data = reminder.getDateToString();
+        if(photoPath != null){
+            reminder.setPhotoPath(photoPath);
+        }
         long id = dbOperations.insertReminder(reminder);
         if(id!=-1){
             reminder.setIdReminder(id);
         }
-        Toast.makeText(this,"Recordatorio Creado",Toast.LENGTH_LONG).show();
+        launchAlertMessage("Recordatorio creado");
+    }
+
+    public void launchAlertMessage(String message){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(message);
+        final Intent intent = new Intent(this,MainActivity.class);
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                startActivity(intent);
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode,Intent data) {
@@ -116,8 +136,11 @@ public class CreateReminderActivity extends AppCompatActivity {
         switch (requestCode){
             case REQUEST_IMAGE_CAPTURE :
                 cameraWorker.resolveTask(results);
+                photoPath =((CameraWorker)cameraWorker).getmCurrentPhotoPath();
+                break;
             case REQUEST_RECORD_VOICENOTE:
                 recorderWorker.resolveTask(results);
+                break;
         }
     }
 

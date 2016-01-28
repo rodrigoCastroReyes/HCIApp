@@ -1,16 +1,17 @@
 package com.example.rodrigo.hciapp.Adapters;
 
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.rodrigo.hciapp.Model.Reminder;
 import com.example.rodrigo.hciapp.R;
+import com.example.rodrigo.hciapp.Utils.DateUtils;
 import com.example.rodrigo.hciapp.Utils.ReminderUtils;
 
 import java.util.ArrayList;
@@ -36,6 +37,15 @@ public class RemindersAdapter extends ArrayAdapter<Reminder> {
         public View estado;
     }
 
+    public ArrayList<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public RemindersAdapter setReminders(ArrayList<Reminder> reminders) {
+        this.reminders = reminders;
+        return this;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView == null){
@@ -50,13 +60,10 @@ public class RemindersAdapter extends ArrayAdapter<Reminder> {
         ViewHolder holder = (ViewHolder)convertView.getTag();
         Reminder currentReminder = this.reminders.get(position);
         holder.title.setText(currentReminder.getTitle());
-
-        String fecha = currentReminder.getDate().get(Calendar.DAY_OF_MONTH) + "/"
-                + currentReminder.getDate().get(Calendar.MONTH) +"/" + currentReminder.getDate().get(Calendar.YEAR);
+        String fecha = DateUtils.convertDateToString(currentReminder.getDate());
         holder.fecha.setText(fecha);
-        String hora = currentReminder.getDate().get(Calendar.HOUR_OF_DAY) + ":" + currentReminder.getDate().get(Calendar.MINUTE);
+        String hora = DateUtils.convertTimeToString(currentReminder.getDate());
         holder.hora.setText(hora);
-
         holder.estado.setBackgroundColor( ReminderUtils.getColorByDate(currentReminder.getDate()));
         return convertView;
     }

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -79,6 +80,7 @@ public class CameraWorker implements Worker {
         if (resultCode == this.context.RESULT_OK) {
             if (this.mCurrentPhotoPath != null) {
                 this.addPictureToGallery(mCurrentPhotoPath);
+                Toast.makeText(context,"Foto capturada con exito", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -86,5 +88,14 @@ public class CameraWorker implements Worker {
     @Override
     public int getCodeTask() {
         return this.codeTask;
+    }
+
+    public String getmCurrentPhotoPath() {
+        return mCurrentPhotoPath;
+    }
+
+    public CameraWorker setmCurrentPhotoPath(String mCurrentPhotoPath) {
+        this.mCurrentPhotoPath = mCurrentPhotoPath;
+        return this;
     }
 }

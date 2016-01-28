@@ -10,10 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.rodrigo.hciapp.R;
+import com.example.rodrigo.hciapp.Utils.DateUtils;
 
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by rodrigo on 16/01/16.
@@ -71,10 +73,10 @@ public class DateWorker implements Worker {
     @Override
     public void resolveTask(Bundle result) {
         this.year = result.getInt("Year");
-        this.monthOfYear = result.getInt("MonthOfYear");
+        this.monthOfYear = result.getInt("MonthOfYear") ;
         this.dayOfMonth = result.getInt("DayOfMonth");
         TextView v = (TextView) this.activity.findViewById(R.id.viewInputDate);
-        date = "" + year + "/" + monthOfYear + "/" + dayOfMonth;
+        date = DateUtils.convertDateToString(new GregorianCalendar(year,monthOfYear,dayOfMonth));
         v.setText(date);
     }
 

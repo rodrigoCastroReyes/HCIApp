@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.rodrigo.hciapp.Adapters.RemindersAdapter;
 import com.example.rodrigo.hciapp.Model.DBOperations;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setToolBar();
+        //savePreferences("isLoad", false);
         isLoadedDB = loadPreferences();
         dbOperations = new DBOperations(this);
         if (!isLoadedDB) {
@@ -123,14 +126,25 @@ public class MainActivity extends AppCompatActivity {
             return reminders;
         }
 
-        protected void onPostExecute(ArrayList<Reminder> reminders){
+        protected void onPostExecute(final ArrayList<Reminder> reminders){
             if (!reminders.isEmpty()) {
-                ListView elements = (ListView) findViewById(R.id.listViewReminder);
-                RemindersAdapter adapter = new RemindersAdapter(context, -1, reminders);
+                final ListView elements = (ListView) findViewById(R.id.listViewReminder);
+                final RemindersAdapter adapter = new RemindersAdapter(context, -1, reminders);
                 elements.setAdapter(adapter);
+                elements.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        Intent intent = new Intent(context,ViewReminderActivity.class);
+                        Bundle data = new Bundle();
+                        Reminder reminder = adapter.getReminders().get(position);
+                        data.putSerializable("Reminder",reminder);
+                        intent.putExtras(data);
+                        startActivity(intent);
+                    }
+                });
             }
         }
-
     }
 
 }
