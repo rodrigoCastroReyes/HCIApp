@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.rodrigo.hciapp.CreateReminderActivity"
     android:background="#eceaea">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarViewReminder"
         android:layout_width="match_parent"
@@ -14,8 +15,9 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="false"
         android:background="#2196f3"
-        android:layout_alignParentEnd="false" />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,11 +147,13 @@
                 android:id="@+id/wrapperDateTime"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_weight="0.50">
+                android:layout_weight="0.50"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id = "@+id/wrapperDate"
                     android:layout_weight="0.60"
                     android:layout_gravity="center"
@@ -338,22 +342,41 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:id="@+id/btnResolveReminder"
-        android:onClick="launchNewReminderActivity"
-        android:layout_alignWithParentIfMissing="false"
-        app:elevation="10dp"
-        app:backgroundTint = "#2196f3"
-        android:src="@drawable/ic_action_tick"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/wrapper"
+        android:gravity="center_vertical|center_horizontal">
 
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnResolveReminder"
+            android:onClick=""
+            app:elevation="10dp"
+            app:backgroundTint = "#2196f3"
+            android:src="@drawable/ic_action_tick"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
+            android:layout_margin="8dp">
+        </android.support.design.widget.FloatingActionButton>
 
-    </android.support.design.widget.FloatingActionButton>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnEditReminder"
+            android:onClick=""
+            app:elevation="10dp"
+            app:backgroundTint = "#2196f3"
+            android:src="@drawable/ic_edit_white"
+            android:layout_weight="0.5"
+            android:layout_gravity="center"
+            android:layout_margin="8dp">
+        </android.support.design.widget.FloatingActionButton>
+    </LinearLayout>
 
 
 </RelativeLayout>

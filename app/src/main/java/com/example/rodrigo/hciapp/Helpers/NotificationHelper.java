@@ -29,7 +29,7 @@ public class NotificationHelper {
         Bundle data = resultIntent.getExtras();
         PendingIntent resultPendingIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.notification)
+                .setSmallIcon(R.drawable.ic_shopping_cart)
                 .setContentTitle(data.getString("Title"))
                 .setContentText(data.getString("Message"));
         mBuilder.setContentIntent(resultPendingIntent);

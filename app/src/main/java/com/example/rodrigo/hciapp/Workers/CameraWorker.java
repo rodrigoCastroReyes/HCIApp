@@ -1,12 +1,16 @@
 package com.example.rodrigo.hciapp.Workers;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
+
+import com.example.rodrigo.hciapp.MainActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +59,19 @@ public class CameraWorker implements Worker {
         context.sendBroadcast(mediaScanIntent);
     }
 
+    public void launchAlertMessage(String message){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                return;
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void launchTask() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//construye un intent para capturar un fota, cualquier aplicacion que capture imagenes puede resolverlo
@@ -80,7 +97,7 @@ public class CameraWorker implements Worker {
         if (resultCode == this.context.RESULT_OK) {
             if (this.mCurrentPhotoPath != null) {
                 this.addPictureToGallery(mCurrentPhotoPath);
-                Toast.makeText(context,"Foto capturada con exito", Toast.LENGTH_SHORT).show();
+                //launchAlertMessage("Se ha capturado la imagen correctamente");
             }
         }
     }

@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.rodrigo.hciapp.ViewReminderActivity">
     <item
-        android:id="@+id/miCompose"
+        android:id="@+id/adviceReminder"
         android:icon="@mipmap/ic_map"
         app:showAsAction="ifRoom"
         android:title="Mapa">
     </item>
 
-    <item android:id="@+id/action_notifcations" android:title="@string/action_notifications"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    <item android:id="@+id/action_settings" android:title="Eliminar"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

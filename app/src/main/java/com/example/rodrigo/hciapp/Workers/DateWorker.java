@@ -5,8 +5,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.rodrigo.hciapp.R;
@@ -14,8 +16,11 @@ import com.example.rodrigo.hciapp.Utils.DateUtils;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import static android.R.layout.simple_spinner_item;
 
 /**
  * Created by rodrigo on 16/01/16.
@@ -26,11 +31,14 @@ public class DateWorker implements Worker {
     private int codeTask;
     private int year,monthOfYear,dayOfMonth;
     private String date;
+    private Spinner inputDaysAfter;
+    private ArrayList<Integer> optionsDaysAfter;
 
     public DateWorker(Activity activity,int code){
         dateFragment = new DatePickerFragment();
         this.activity = activity;
         this.codeTask = code;
+        inputDaysAfter = (Spinner)activity.findViewById(R.id.inputDaysAfter);
     }
 
     public String getDate() {
@@ -76,8 +84,30 @@ public class DateWorker implements Worker {
         this.monthOfYear = result.getInt("MonthOfYear") ;
         this.dayOfMonth = result.getInt("DayOfMonth");
         TextView v = (TextView) this.activity.findViewById(R.id.viewInputDate);
-        date = DateUtils.convertDateToString(new GregorianCalendar(year,monthOfYear,dayOfMonth));
+        GregorianCalendar gregorianCalendar = new GregorianCalendar(year,monthOfYear,dayOfMonth);
+        date = DateUtils.convertDateToString(gregorianCalendar);
         v.setText(date);
+        int days = (int) DateUtils.getDifferenceDays(gregorianCalendar);
+        setOptionsDaysAfter(days);
+    }
+
+    public void setOptionsDaysAfter(int days){
+        String [] arraySpinner;
+        if( days > 0) {
+            if(days > 5){
+                days = 5;
+            }
+            arraySpinner = new String[days + 1];
+            arraySpinner[0] = "Mismo día";
+            for(int i = 1 ; i <= days ; i++){
+                arraySpinner[i] = Integer.toString(i) + " días antes";
+            }
+        }else{
+            arraySpinner = new String [1];
+            arraySpinner[0] = "Mismo día";
+        }
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this.activity, android.R.layout.simple_spinner_item, arraySpinner);
+        inputDaysAfter.setAdapter(spinnerAdapter);
     }
 
     @Override

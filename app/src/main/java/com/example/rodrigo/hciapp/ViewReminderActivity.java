@@ -1,7 +1,12 @@
+
 package com.example.rodrigo.hciapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,13 +14,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.rodrigo.hciapp.Adapters.RemindersAdapter;
+import com.example.rodrigo.hciapp.Helpers.LocationHelper;
 import com.example.rodrigo.hciapp.Model.Reminder;
 import com.example.rodrigo.hciapp.Utils.DateUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -26,6 +36,7 @@ public class ViewReminderActivity extends AppCompatActivity {
     private TextView viewTitle,viewNotes,viewDate,viewHour,viewAfterDay,viewHourRange;
     private ImageView viewPhoto;
     private LinearLayout wrapperTitle;
+    private LocationHelper locationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,7 @@ public class ViewReminderActivity extends AppCompatActivity {
         viewHour = (TextView) findViewById(R.id.viewHour);
         viewAfterDay = (TextView) findViewById(R.id.viewDaysAfter);
         viewHourRange = (TextView) findViewById(R.id.viewHourRange);
+        locationHelper = new LocationHelper(this);
         this.setToolbar();
         this.setDataReminder(reminder);
     }
@@ -90,15 +102,47 @@ public class ViewReminderActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.adviceReminder:
+                new LoaderAdvice(this).execute();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private class LoaderAdvice extends AsyncTask<Void, Void,Bundle> {
+        private Context context;
+
+        public LoaderAdvice(Context context){
+            this.context = context;
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        protected Bundle doInBackground(Void... params) {
+            Bundle data = null;
+            Location userLocation = locationHelper.getRecentLocation();
+            if(userLocation!=null) {
+                data = new Bundle();
+                data.putParcelable("UserLocation", userLocation);
+            }
+            return data;
+        }
+
+        protected void onPostExecute(Bundle data){
+            if(data!=null) {
+                Intent intent = new Intent(context, AdviceActivity.class);
+                intent.putExtras(data);
+                startActivity(intent);
+            }
+            //mandar mensaje para activar la geolocalizacion
+        }
+
     }
+
+
 }

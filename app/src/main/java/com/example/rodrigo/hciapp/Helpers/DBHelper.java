@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.rodrigo.hciapp.Model.Market;
 import com.example.rodrigo.hciapp.Model.Reminder;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<String>getCreateTableSentences(){
         ArrayList<String >sentences = new ArrayList<>();
         sentences.add(Reminder.ReminderEntry.DATABASE_CREATE);
+        sentences.add(Market.MarketEntry.DATABASE_CREATE);
         //otras tablas
         return sentences;
     }

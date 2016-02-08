@@ -5,30 +5,13 @@ import com.example.rodrigo.hciapp.Model.Reminder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
  * Created by rodrigo on 23/01/16.
  */
 public class DateUtils {
-
-    public static String setDateFormat(String date){
-        /*String str = removeTimeZone(date);
-
-        String strData = null;
-        TimeZone tzUTC = TimeZone.getTimeZone("UTC");
-        SimpleDateFormat formatoEntrada = new SimpleDateFormat("EEE MMM dd HH:mm:ss yyyy", Locale.US);
-        formatoEntrada.setTimeZone(tzUTC);
-        SimpleDateFormat formatoSaida = new SimpleDateFormat("EEE, dd/MM/yy, HH:mm");
-
-        try {
-            strData = formatoSaida.format(formatoEntrada.parse(str));
-        } catch (ParseException e) {
-            Log.e("Erro parser data", Log.getStackTraceString(e));
-        }
-        return strData;*/
-        return date;
-    }
 
     public static GregorianCalendar parserStringDate(String date)  {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -95,8 +78,15 @@ public class DateUtils {
         return time;
     }
 
-    public static String removeTimeZone(String data){
-        // busca na string e remove o padrão " (+ ou -)dddd" Ex: " +3580"
-        return data.replaceFirst("(\\s[+|-]\\d{4})", "");
+    public static long getDifferenceDays(GregorianCalendar date){
+        GregorianCalendar currentDate = new GregorianCalendar();
+        currentDate = new GregorianCalendar(currentDate.get(Calendar.YEAR),currentDate.get(Calendar.MONTH),currentDate.get(Calendar.DAY_OF_MONTH),0,0);
+        Date today = currentDate.getTime();
+        Date anotherDay =   date.getTime();
+        long diferencia = Math.abs(today.getTime() - anotherDay.getTime());
+        long dias = diferencia / (1000 * 60 * 60 * 24);
+        return dias;
     }
+
+
 }

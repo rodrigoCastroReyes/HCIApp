@@ -32,8 +32,9 @@ import java.util.Queue;
  */
 public class AdviceService extends Service {
     private Activity activity;
+    private List<Reminder> activeReminders;
     private ArrayList<Integer> notificationsId = new ArrayList<Integer>();
-    private Thread thread;
+    private AdviceThread thread;
 
     @Override
     public void onCreate() {
@@ -42,11 +43,14 @@ public class AdviceService extends Service {
         // main thread, which we don't want to block.  We also make it
         // background priority so CPU-intensive work will not disrupt our UI.
         thread = new AdviceThread(this);
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // If we get killed, after returning from here, restart
+        activeReminders = (ArrayList<Reminder>) intent.getSerializableExtra("Reminders");
+        thread.setActiveReminders(activeReminders);
         thread.start();
         return START_STICKY;
     }
@@ -64,13 +68,19 @@ public class AdviceService extends Service {
         private Context context;
 
         public AdviceThread(Context context) {
-            this.marketsHelper = new MarketsHelper();
+            this.marketsHelper = new MarketsHelper(context);
+            marketsHelper.getMarkets();
             this.locationHelper = new LocationHelper(context);
             this.context = context;
         }
 
-        public List getActiveReminder() {
-            return null;
+        public List<Reminder> getActiveReminders() {
+            return activeReminders;
+        }
+
+        public AdviceThread setActiveReminders(List<Reminder> activeReminders) {
+            this.activeReminders = activeReminders;
+            return this;
         }
 
         public void run() {
@@ -78,27 +88,33 @@ public class AdviceService extends Service {
             boolean isThereReminders, isThereMarketsCloser;
             float ratio = 1000;
             ArrayList<Market> marketsCloser;
-            /*while (true) {
-                activeReminders = this.getActiveReminder();
-                isThereReminders = activeReminders.isEmpty();
-                userLocation = locationHelper.getRecentLocation();
-                marketsCloser = (ArrayList<Market>)marketsHelper.findMarketsCloser(userLocation,ratio);
-                isThereMarketsCloser = marketsCloser.isEmpty();
-                if(isThereReminders && isThereMarketsCloser){
-                    notifyTo(userLocation);
+            try {
+                while (true) {
+                    Thread.sleep(5*60*1000);
+                    activeReminders = getActiveReminders();
+                    isThereReminders = !activeReminders.isEmpty();
+                    userLocation = locationHelper.getRecentLocation();
+                    marketsCloser = (ArrayList<Market>)marketsHelper.findMarketsCloser(userLocation,ratio);
+                    isThereMarketsCloser = !marketsCloser.isEmpty();
+                    if(isThereReminders && isThereMarketsCloser){
+                        notifyTo(userLocation,marketsCloser);
+                    }
+                    Thread.sleep(5*60*1000);
                 }
-            }*/
-            userLocation = locationHelper.getRecentLocation();
+            }catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            /*userLocation = locationHelper.getRecentLocation();
             marketsCloser = (ArrayList<Market>)marketsHelper.findMarketsCloser(userLocation,ratio);
-            notifyTo(userLocation,marketsCloser);
+            notifyTo(userLocation,marketsCloser);*/
         }
 
         public void notifyTo(Location userLocation,ArrayList<Market> marketsCloser){
             Bundle data = new Bundle();
-            data.putString("Title","There is markets closer");
-            data.putString("Message","Remind!!");
+            data.putString("Title","Recuerda!");
+            data.putString("Message","Existen Supermercados cerca!!");
             data.putParcelable("UserLocation",userLocation);
-            data.putParcelableArrayList("MarketCloser",marketsCloser);
+            data.putSerializable("MarketsCloser",marketsCloser);
             Intent intent = new Intent(context,AdviceActivity.class);
             intent.putExtras(data);
             NotificationHelper notificationHelper = new NotificationHelper(context,intent);

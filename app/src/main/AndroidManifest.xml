@@ -48,7 +48,11 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:label="@string/title_activity_view_reminder" >
         </activity>
-
+        <activity
+            android:name=".AdviceActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:label="@string/title_activity_advice" >
+        </activity>
         <service
             android:name=".Services.AdviceService"
             android:enabled="true"
@@ -57,10 +61,7 @@
             android:name=".Services.AlarmService"
             android:enabled="true"
             android:exported="false" />
-        <activity
-            android:name=".AdviceActivity"
-            android:label="@string/title_activity_advice" >
-        </activity>
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCoki9qVPDCVYtAojF_nbRf8-UiMhSAjBE" />

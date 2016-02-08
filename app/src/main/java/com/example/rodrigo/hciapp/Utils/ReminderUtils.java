@@ -13,25 +13,8 @@ import java.util.GregorianCalendar;
  */
 public class ReminderUtils {
 
-
     public static int getColorByDate(GregorianCalendar date){
-        //implementar bien esta funcion
-        GregorianCalendar currentDate = new GregorianCalendar();
-        int k = date.get(Calendar.MONTH);
-       /*
-        int today = currentDate.get(Calendar.DAY_OF_MONTH);
-        int anotherDay = date.get(Calendar.DAY_OF_MONTH);
-        int dif = Math.abs(today - anotherDay);*/
-        Date today = currentDate.getTime();
-        Date anotherDay =   date.getTime();
-
-        int m1 = today.getMonth();
-        int m2 = anotherDay.getMonth();
-
-
-        long diferencia = Math.abs(today.getTime() - anotherDay.getTime());
-        long dias = diferencia / (1000 * 60 * 60 * 24);
-
+        long dias = DateUtils.getDifferenceDays(date);
         if(dias >= 0 && dias < 1 ){
             return Color.rgb(244,11,11);//color rojo
         }

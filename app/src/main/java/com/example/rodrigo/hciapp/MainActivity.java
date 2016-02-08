@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
         dbOperations = new DBOperations(this);
         if (!isLoadedDB) {
             dbOperations.getDbHelper().createTables();
+            dbOperations.insertMarkets();
+            //Toast.makeText(this,"supermercados creados",Toast.LENGTH_SHORT).show();
             savePreferences("isLoad", true);
         }
+
     }
 
     @Override
@@ -135,14 +138,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view,
                                             int position, long id) {
-                        Intent intent = new Intent(context,ViewReminderActivity.class);
+                        Intent intent = new Intent(context, ViewReminderActivity.class);
                         Bundle data = new Bundle();
                         Reminder reminder = adapter.getReminders().get(position);
-                        data.putSerializable("Reminder",reminder);
+                        data.putSerializable("Reminder", reminder);
                         intent.putExtras(data);
                         startActivity(intent);
                     }
                 });
+                Intent intent = new Intent(context, AdviceService.class);
+                intent.putExtra("Reminders",reminders);
+                startService(intent);
             }
         }
     }

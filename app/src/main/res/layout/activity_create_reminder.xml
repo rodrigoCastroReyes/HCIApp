@@ -18,17 +18,17 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/wrapper"
         android:orientation="vertical"
         android:background="#eceaea"
         android:layout_below="@+id/toolbarCreateReminder"
         android:layout_alignParentStart="true"
         android:weightSum="1"
-        android:layout_alignParentBottom="true">
+        android:layout_above="@+id/btnCreateNewReminder">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/wrapperTitulo"
             android:orientation="vertical"
@@ -41,26 +41,26 @@
             android:layout_weight="0.25">
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
-                android:layout_weight="0.40"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" >
+                android:layout_weight="0.50"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp">
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/imageView4"
                     android:layout_weight="0.10"
                     android:src="@drawable/ic_assignment_gray"
-                    android:layout_gravity="center"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center_vertical" />
 
                 <EditText
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/inputTitle"
                     android:hint="Titulo"
                     android:layout_alignParentTop="true"
@@ -68,12 +68,11 @@
                     android:theme="@style/EditTextTheme"
                     android:layout_weight="0.90"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginRight="4dp" />
             </LinearLayout>
 
             <EditText
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/inputNotes"
                 android:hint="Notas"
@@ -81,28 +80,16 @@
                 android:inputType="text|textMultiLine"
                 android:layout_alignStart="@+id/inputTitle"
                 android:theme="@style/EditTextTheme"
-                android:layout_weight="0.60"
+                android:layout_weight="0.5"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp" />
         </LinearLayout>
 
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wrapperNotes"
-            android:orientation="horizontal"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
-            android:background="#fff">
-
-        </LinearLayout>-->
-
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.30"
-            android:layout_gravity="top"
+            android:layout_weight="0.25"
+            android:layout_gravity="center"
             android:background="#fff"
             android:orientation="vertical"
             android:layout_marginLeft="8dp"
@@ -115,14 +102,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
-                android:layout_weight="0.30"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="4dp" >
+                android:layout_weight="0.50"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp">
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/imageView5"
                     android:layout_weight="0.10"
                     android:src="@drawable/ic_event_note"
@@ -146,102 +132,93 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:id="@+id/wrapperParameters"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
                 android:background="#fff"
-                android:elevation="5dp"
-                android:layout_weight="0.7"
-                android:layout_marginBottom="8dp">
+                android:layout_weight="0.5"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:paddingBottom="8dp">
+
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id = "@+id/wrapperDate"
-                    android:layout_weight="0.33"
-                    android:orientation="vertical"
+                    android:layout_weight="0.6"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="4dp">
+                    android:layout_marginRight="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Fecha"
-                        android:id="@+id/textView4"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" />
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:text="calendar"
                         android:id="@+id/btnInputCalendar"
-                        android:onClick="setCalendar"
                         android:layout_below="@+id/inputNotes"
                         android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/roundedbutton"
-                        android:src="@drawable/ic_today_white" />
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_today_gray"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="0.25" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="28 de Enero 2015"
+                        android:text="28 de Enero 2016"
                         android:id="@+id/viewInputDate"
-                        android:layout_gravity="center_horizontal"
+                        android:onClick="setCalendar"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="0.75"
+                        android:autoText="false"
+                        android:gravity="center_vertical"
+                        android:clickable="true" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id = "@+id/wrapperHour"
-                    android:layout_weight="0.33"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
+                    android:layout_weight="0.40"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Hora"
-                        android:id="@+id/textView5"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" />
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:text="hour"
                         android:id="@+id/btnInputHour"
-                        android:onClick="setTime"
                         android:layout_below="@+id/editText"
                         android:layout_alignStart="@+id/btnInputCalendar"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@drawable/roundedbutton"
-                        android:src="@drawable/ic_schedule_white" />
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_schedule_gray"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_weight="0.25" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="13:30"
                         android:id="@+id/viewInputHour"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="0.75"
+                        android:onClick="setTime"
+                        android:gravity="center_vertical"
+                        android:clickable="true" />
 
                 </LinearLayout>
-
             </LinearLayout>
 
         </LinearLayout>
@@ -249,31 +226,31 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_weight="0.25"
             android:background="#fff"
             android:orientation="vertical"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:id="@+id/wrapperInputNotifications"
-            android:elevation="5dp" >
+            android:elevation="5dp"
+            android:layout_gravity="center">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.50"
                 android:orientation="horizontal"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="4dp" >
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp">
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/imageView6"
                     android:layout_weight="0.10"
                     android:src="@drawable/ic_notifications_gray"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp" />
 
@@ -298,71 +275,75 @@
                 android:id="@+id/linearLayout4"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_weight="0.50" >
+                android:layout_weight="0.50"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="4dp"
+                android:paddingBottom="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/linearLayout2"
+                    android:layout_height="match_parent"
+                    android:id="@+id/wrapperInputDaysAfter"
                     android:layout_weight="0.5"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="8dp" >
+                    android:layout_gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:text="Notifications"
                         android:id="@+id/imageView7"
                         android:layout_alignParentBottom="true"
-                        android:layout_gravity="center"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_event_available_gray"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginLeft="8dp" />
+                        android:layout_weight="0.25"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="1 dia Antes"
-                        android:id="@+id/textView10"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" />
+                    <Spinner
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/inputDaysAfter"
+                        android:layout_weight="0.75"
+                        android:entries="@array/days_after_array"
+                        android:focusable="true"
+                        android:prompt="@string/daysAfter_prompt"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:spinnerMode="dialog" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/linearLayout3"
+                    android:layout_height="match_parent"
+                    android:id="@+id/wrapperHourRange"
                     android:layout_weight="0.5"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp" >
+                    android:layout_gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:text="Notifications"
                         android:id="@+id/imageView8"
                         android:layout_alignParentBottom="true"
                         android:layout_gravity="center"
                         android:src="@drawable/ic_history_gray"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp" />
+                        android:layout_weight="0.25"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Cada 12 horas"
-                        android:id="@+id/textView11"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp" />
+                    <Spinner
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/inputHourRange"
+                        android:layout_weight="0.75"
+                        android:entries="@array/hour_range_array"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:spinnerMode="dialog"
+                        android:prompt="@string/hourRange_prompt" />
                 </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 
@@ -376,93 +357,22 @@
         android:layout_marginBottom="8dp"
         android:background="#fff"
         android:elevation="5dp"
-        android:layout_weight="0.20"
+        android:layout_weight="0.25"
             android:id="@+id/wrapperInputSensors">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Opcional:"
             android:id="@+id/textView"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="2dp"
             android:layout_marginRight="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="0.3" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/wrapperSensors"
-            android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/wrapperCamera"
-                android:orientation="vertical"
-                android:layout_weight="0.5"
-                android:padding="4dp"
-                android:layout_gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Tomar foto"
-                    android:id="@+id/textView2"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Take Photo"
-                    android:id="@+id/btnTakePhoto"
-                    android:onClick="takePhotoHandle"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/roundedbutton"
-                    android:src="@drawable/ic_camera"
-                    android:layout_marginBottom="2dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/wrapperVoiceNote"
-                android:orientation="vertical"
-                android:layout_weight="0.5"
-                android:padding="4dp"
-                android:layout_gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Grabar Voz"
-                    android:id="@+id/textView3"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp" />
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tomar foto"
-                    android:id="@+id/btnCreateVoiceNote"
-                    android:onClick="recordVoiceNoteHandle"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toEndOf="@+id/btnInputHour"
-                    android:layout_weight="0.5"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ic_settings_voice"
-                    android:background="@drawable/roundedbutton"
-                    android:layout_marginBottom="2dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
 
     </LinearLayout>
@@ -478,7 +388,9 @@
         android:src="@drawable/ic_save"
         android:gravity="center_vertical|center_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        android:cropToPadding="false"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

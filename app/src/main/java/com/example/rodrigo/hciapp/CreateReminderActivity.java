@@ -1,7 +1,10 @@
 package com.example.rodrigo.hciapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,17 +14,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.rodrigo.hciapp.Helpers.DBHelper;
 import com.example.rodrigo.hciapp.Model.DBOperations;
 import com.example.rodrigo.hciapp.Model.Reminder;
+import com.example.rodrigo.hciapp.Utils.DateUtils;
 import com.example.rodrigo.hciapp.Workers.CameraWorker;
 import com.example.rodrigo.hciapp.Workers.DateWorker;
 import com.example.rodrigo.hciapp.Workers.RecorderVoiceWorker;
 import com.example.rodrigo.hciapp.Workers.TimeWorker;
 import com.example.rodrigo.hciapp.Workers.Worker;
 
+import java.lang.reflect.Array;
+import java.security.SecurityPermission;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 import static android.graphics.Color.rgb;
@@ -30,7 +38,9 @@ public class CreateReminderActivity extends AppCompatActivity {
     private Worker cameraWorker,recorderWorker,timeWorker,dateWorker;
     private DBOperations dbOperations;
     private EditText inputTitle,inputNotes;
+    private Spinner inputDaysAfter,inputHourRange;
     private String photoPath  = null;
+    private ArrayList<Integer> optionsDaysAfter,optionsHourRange;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_RECORD_VOICENOTE = 2;
     static final int REQUEST_GET_TIME = 3;
@@ -45,6 +55,9 @@ public class CreateReminderActivity extends AppCompatActivity {
         inputTitle = (EditText) findViewById(R.id.inputTitle);
         inputNotes = (EditText) findViewById(R.id.inputNotes);
 
+        inputDaysAfter = (Spinner)findViewById(R.id.inputDaysAfter);
+        inputHourRange = (Spinner)findViewById(R.id.inputHourRange);
+
         cameraWorker = new CameraWorker(this,REQUEST_IMAGE_CAPTURE);
         recorderWorker = new RecorderVoiceWorker(this,REQUEST_RECORD_VOICENOTE);
         timeWorker = new TimeWorker(this,REQUEST_GET_TIME);
@@ -52,6 +65,22 @@ public class CreateReminderActivity extends AppCompatActivity {
 
         dbOperations = new DBOperations(this);
 
+        optionsHourRange = new ArrayList<>();
+
+        optionsDaysAfter = new ArrayList<>();
+
+        setNotificationInputs();
+
+    }
+
+    public void setNotificationInputs(){
+        int maxHourRange = 6, maxDaysAfter = 6;
+        for(int i = 1 ; i < maxHourRange ; i++){
+            optionsHourRange.add(i*2);
+        }
+        for(int i = 0 ; i < maxDaysAfter ; i++){
+            optionsDaysAfter.add(i);
+        }
     }
 
     public void setToolbar(){
@@ -94,6 +123,7 @@ public class CreateReminderActivity extends AppCompatActivity {
     public void saveNewReminder(View v){
         int year,month,day,hour,minute;
         int daysAfter,hourRange;
+
         String title = inputTitle.getText().toString();
         String notes = inputNotes.getText().toString();
         year = ((DateWorker) dateWorker).getYear();
@@ -101,10 +131,12 @@ public class CreateReminderActivity extends AppCompatActivity {
         day = ((DateWorker) dateWorker).getDayOfMonth();
         hour = ((TimeWorker)timeWorker).getHourOfDay();
         minute = ((TimeWorker)timeWorker).getMinute();
-        daysAfter = 1;
-        hourRange = 12;
-        Reminder reminder = new Reminder(title,notes,new GregorianCalendar(year,month,day,hour,minute),daysAfter,hourRange);
-        String data = reminder.getDateToString();
+
+        daysAfter = optionsDaysAfter.get(inputDaysAfter.getSelectedItemPosition());
+        hourRange = optionsHourRange.get(inputHourRange.getSelectedItemPosition());
+
+        GregorianCalendar gregorianCalendar = new GregorianCalendar(year, month, day, hour, minute);
+        Reminder reminder = new Reminder(title, notes,gregorianCalendar, daysAfter, hourRange);
         if(photoPath != null){
             reminder.setPhotoPath(photoPath);
         }
@@ -144,7 +176,7 @@ public class CreateReminderActivity extends AppCompatActivity {
         }
     }
 
-            @Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -157,6 +189,4 @@ public class CreateReminderActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }
