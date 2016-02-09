@@ -19,6 +19,7 @@ import com.example.rodrigo.hciapp.Adapters.RemindersAdapter;
 import com.example.rodrigo.hciapp.Model.DBOperations;
 import com.example.rodrigo.hciapp.Model.Reminder;
 import com.example.rodrigo.hciapp.Services.AdviceService;
+import com.example.rodrigo.hciapp.Services.AlarmService;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -28,7 +29,7 @@ import static android.graphics.Color.*;
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Reminder> reminders;
     private DBOperations dbOperations;
-    private boolean isLoadedDB;
+    private boolean isLoadedDB,isRunningService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setToolBar();
         //savePreferences("isLoad", false);
-        isLoadedDB = loadPreferences();
+        //savePreferences("isRunningService",false);
         dbOperations = new DBOperations(this);
+        loadPreferences();
         if (!isLoadedDB) {
             dbOperations.getDbHelper().createTables();
             dbOperations.insertMarkets();
             //Toast.makeText(this,"supermercados creados",Toast.LENGTH_SHORT).show();
             savePreferences("isLoad", true);
         }
-
     }
 
     @Override
@@ -58,7 +59,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchAdviceService() {
-        Intent intent = new Intent(this, AdviceService.class);
+        //Intent intent = new Intent(this, AdviceService.class);
+        //startService(intent);
+    }
+
+    public void launchAlarmService(ArrayList<Reminder>reminders) {
+        Intent intent = new Intent(this, AlarmService.class);
+        Bundle data = new Bundle();
+        data.putSerializable("Reminders", reminders);
+        intent.putExtras(data);
         startService(intent);
     }
 
@@ -68,9 +77,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
     }
 
-    private boolean loadPreferences() {
+    private void loadPreferences() {
         SharedPreferences preferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        return preferences.getBoolean("isLoad", false);
+        isLoadedDB = preferences.getBoolean("isLoad", false);
+        isRunningService = preferences.getBoolean("isRunningService",false);
     }
 
     private void savePreferences(String key, boolean value) {
@@ -146,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
-                Intent intent = new Intent(context, AdviceService.class);
-                intent.putExtra("Reminders",reminders);
-                //startService(intent);
+                launchAlarmService(reminders);
+                savePreferences("isRunningService", true);
+                //launchAdviceService();
             }
         }
     }

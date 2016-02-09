@@ -60,8 +60,10 @@ public class RemindersAdapter extends ArrayAdapter<Reminder> {
         ViewHolder holder = (ViewHolder)convertView.getTag();
         Reminder currentReminder = this.reminders.get(position);
         holder.title.setText(currentReminder.getTitle());
-        String fecha = DateUtils.convertDateToString(currentReminder.getDate());
+
+        String fecha = DateUtils.showDate(currentReminder.getDate());
         holder.fecha.setText(fecha);
+
         String hora = DateUtils.convertTimeToString(currentReminder.getDate());
         holder.hora.setText(hora);
         holder.estado.setBackgroundColor( ReminderUtils.getColorByDate(currentReminder.getDate()));

@@ -19,8 +19,10 @@ public class ReminderUtils {
             return Color.rgb(244,11,11);//color rojo
         }
         else if(dias >=1 && dias <=3){
-            return Color.rgb(247,97,2);//color naranja
+            return Color.rgb(247,198,2);//color naranja
         }
         return Color.rgb(39, 174, 97);
     }
+
+
 }

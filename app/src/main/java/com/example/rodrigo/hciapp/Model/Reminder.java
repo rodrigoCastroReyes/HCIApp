@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.text.format.Time;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -23,6 +24,7 @@ public class Reminder implements Serializable,Comparable {
     private int daysAfter,hourRange;
     private String photoPath,voiceNotePath;
     private State state;
+    private ArrayList<GregorianCalendar>datesNotifications;
 
     public Reminder(){
         this.state =  State.PENDING;
@@ -99,6 +101,15 @@ public class Reminder implements Serializable,Comparable {
         return voiceNotePath;
     }
 
+    public ArrayList<GregorianCalendar> getDatesNotifications() {
+        return datesNotifications;
+    }
+
+    public Reminder setDatesNotifications(ArrayList<GregorianCalendar> datesNotifications) {
+        this.datesNotifications = datesNotifications;
+        return this;
+    }
+
     public Reminder setVoiceNotePath(String voiceNotePath) {
         this.voiceNotePath = voiceNotePath;
         return this;
@@ -133,6 +144,28 @@ public class Reminder implements Serializable,Comparable {
         return this.getDate().compareTo(reminderTwo.getDate());
     }
 
+    public void defineDatesOfNotifications(){
+        datesNotifications = new ArrayList<>();
+        datesNotifications.add(this.date);
+        //int minutes= hourRange;
+        int num_notifications ;
+        if(hourRange >0){
+            if(daysAfter>0){
+                num_notifications = (24/hourRange)*daysAfter;
+            }else{
+                num_notifications = (24/hourRange);
+            }
+            GregorianCalendar currentDate = (GregorianCalendar) this.date.clone();
+            while(num_notifications>0){
+                currentDate.add(Calendar.HOUR,-hourRange);
+                //currentDate.add(Calendar.MINUTE,-minutes);
+                datesNotifications.add((GregorianCalendar) currentDate.clone());
+                num_notifications--;
+            }
+        }else{
+            return;
+        }
+    }
 
     public static abstract class ReminderEntry implements BaseColumns {
         public static final String TABLE_NAME = "Reminder";

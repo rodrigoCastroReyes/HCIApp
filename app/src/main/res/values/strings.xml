@@ -10,11 +10,13 @@
         <item>Mismo día</item>
     </string-array>
     <string-array name="hour_range_array">
+        <item>Hora limite</item>
         <item>cada 2 horas</item>
         <item>cada 4 horas</item>
         <item>cada 6 horas</item>
         <item>cada 8 horas</item>
-        <item>cada 10 horas</item>
+        <item>cada 12 horas</item>
+        <item>cada 18 horas</item>
     </string-array>
     <string name="daysAfter_prompt">Escoger dias antes</string>
     <string name="hourRange_prompt">Escoger rango de horas</string>

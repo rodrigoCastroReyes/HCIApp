@@ -1,6 +1,8 @@
 package com.example.rodrigo.hciapp.Workers;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,11 +10,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.rodrigo.hciapp.MainActivity;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,17 +42,57 @@ public class CameraWorker implements Worker {
         this.mCurrentPhotoPath = p;
     }
 
-    public File createImageFile() throws IOException { //crea un nuevo archivo para guardar la imagen capturada
+    private File saveToInternalStorage()throws IOException{
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName ="JPEG_"+timestamp+"_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir(imageFileName,Context.MODE_PRIVATE);
         File image = File.createTempFile(
                 imageFileName, /*prefix*/
                 ".jpg",        /*suffix*/
-                storageDir
+                directory
         );
         this.mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    public File createImageFile() throws IOException { //crea un nuevo archivo para guardar la imagen capturada
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName ="JPEG_"+timestamp+"_";
+        if(this.isExternalStorageWritable()){
+            File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            File image = File.createTempFile(
+                    imageFileName, //prefix
+                    ".jpg",        //suffix
+                    storageDir
+            );
+            this.mCurrentPhotoPath = image.getAbsolutePath();
+            return image;
+        }else{
+            Toast.makeText(context,"error en camara",Toast.LENGTH_LONG).show();
+            return null;
+        }
+        //return saveToInternalStorage();
     }
 
     public void addPictureToGallery(String path) {
@@ -80,6 +124,7 @@ public class CameraWorker implements Worker {
             try {
                 photoFile = this.createImageFile();//crea el archivo en donde se guardara la foto
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                String s= this.mCurrentPhotoPath;
             } catch (IOException ex) {
                 ex.printStackTrace();
                 photoFile=null;

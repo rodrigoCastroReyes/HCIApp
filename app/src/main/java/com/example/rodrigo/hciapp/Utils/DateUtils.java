@@ -20,7 +20,7 @@ public class DateUtils {
         try {
             cal.setTime(dateFormat.parse(date));
             gregorianCalendar = new GregorianCalendar(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),
-                    cal.get(Calendar.HOUR),cal.get(Calendar.MINUTE));
+                    cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -58,7 +58,7 @@ public class DateUtils {
     }
 
     public static String convertAM_PM(int codeAM_PM){
-        if(codeAM_PM == 1){
+        if(codeAM_PM == Calendar.PM){
             return "PM";
         }else {
             return "AM";
@@ -72,21 +72,50 @@ public class DateUtils {
         return date;
     }
 
+    public static String showDate(GregorianCalendar calendar){
+        int dias = (int) Math.floor(getDifferenceDays(calendar));
+        if(dias == 0){
+            return "Hoy";
+        }
+        else if(dias>0){
+            if(dias == 1){
+                return "Queda " + dias + " dia";
+            }
+            return "Quedan " + dias + " dias";
+        }
+        return convertDateToString(calendar);
+    }
+
     public static String convertTimeToString(GregorianCalendar calendar){
         String time;
         time = "" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + " " + convertAM_PM(calendar.get(Calendar.AM_PM));
         return time;
     }
 
-    public static long getDifferenceDays(GregorianCalendar date){
+    public static long getDifference(GregorianCalendar date){
         GregorianCalendar currentDate = new GregorianCalendar();
-        currentDate = new GregorianCalendar(currentDate.get(Calendar.YEAR),currentDate.get(Calendar.MONTH),currentDate.get(Calendar.DAY_OF_MONTH),0,0);
+        //currentDate = new GregorianCalendar(currentDate.get(Calendar.YEAR),currentDate.get(Calendar.MONTH),currentDate.get(Calendar.DAY_OF_MONTH),0,0);
         Date today = currentDate.getTime();
         Date anotherDay =   date.getTime();
         long diferencia = Math.abs(today.getTime() - anotherDay.getTime());
+        return diferencia;
+    }
+
+    public static long getDifferenceDays(GregorianCalendar date){
+        long diferencia = getDifference(date);
         long dias = diferencia / (1000 * 60 * 60 * 24);
         return dias;
     }
 
+    public static long getDifferenceHours(GregorianCalendar date){
+        long diferencia = getDifference(date);
+        long hours = diferencia / (1000 * 60 * 60);
+        return hours;
+    }
 
+    public static long getDifferenceMinutes(GregorianCalendar date){
+        long diferencia = getDifference(date);
+        long hours = diferencia / (1000 * 60 );
+        return hours;
+    }
 }

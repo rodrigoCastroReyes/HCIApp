@@ -3,6 +3,7 @@ package com.example.rodrigo.hciapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -75,7 +77,7 @@ public class CreateReminderActivity extends AppCompatActivity {
 
     public void setNotificationInputs(){
         int maxHourRange = 6, maxDaysAfter = 6;
-        for(int i = 1 ; i < maxHourRange ; i++){
+        for(int i = 0 ; i <= maxHourRange ; i++){
             optionsHourRange.add(i*2);
         }
         for(int i = 0 ; i < maxDaysAfter ; i++){
@@ -137,6 +139,7 @@ public class CreateReminderActivity extends AppCompatActivity {
 
         GregorianCalendar gregorianCalendar = new GregorianCalendar(year, month, day, hour, minute);
         Reminder reminder = new Reminder(title, notes,gregorianCalendar, daysAfter, hourRange);
+
         if(photoPath != null){
             reminder.setPhotoPath(photoPath);
         }
@@ -169,6 +172,8 @@ public class CreateReminderActivity extends AppCompatActivity {
             case REQUEST_IMAGE_CAPTURE :
                 cameraWorker.resolveTask(results);
                 photoPath =((CameraWorker)cameraWorker).getmCurrentPhotoPath();
+                ImageView imageView = (ImageView) findViewById(R.id.imageViewPhoto);
+                imageView.setImageBitmap(BitmapFactory.decodeFile(photoPath));
                 break;
             case REQUEST_RECORD_VOICENOTE:
                 recorderWorker.resolveTask(results);

@@ -13,6 +13,7 @@ import android.widget.TimePicker;
 import com.example.rodrigo.hciapp.R;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by rodrigo on 16/01/16.
@@ -23,10 +24,17 @@ public class TimeWorker implements Worker{
     private int codeTask;
     private int hourOfDay,minute;
     private String time;
+    private TextView textViewTime;
 
     public TimeWorker(Activity activity,int code){
         timeFragment = new TimePickerFragment();
         this.activity = activity;
+        textViewTime = (TextView) this.activity.findViewById(R.id.viewInputHour);
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        hourOfDay = gregorianCalendar.get(Calendar.HOUR_OF_DAY);
+        minute = gregorianCalendar.get(Calendar.MINUTE);
+        time = "" + hourOfDay + ":" + minute + ":00";
+        textViewTime.setText(time);
     }
 
     public String getTime() {
@@ -62,9 +70,8 @@ public class TimeWorker implements Worker{
     public void resolveTask(Bundle result) {
         this.hourOfDay = result.getInt("HourOfDay");
         this.minute = result.getInt("Minute");
-        TextView v = (TextView) this.activity.findViewById(R.id.viewInputHour);
         time = "" + hourOfDay + ":" + minute + ":00";
-        v.setText(time);
+        textViewTime.setText(time);
     }
 
     @Override

@@ -31,6 +31,7 @@ public class DateWorker implements Worker {
     private int codeTask;
     private int year,monthOfYear,dayOfMonth;
     private String date;
+    private TextView textViewDate;
     private Spinner inputDaysAfter;
     private ArrayList<Integer> optionsDaysAfter;
 
@@ -39,6 +40,13 @@ public class DateWorker implements Worker {
         this.activity = activity;
         this.codeTask = code;
         inputDaysAfter = (Spinner)activity.findViewById(R.id.inputDaysAfter);
+        textViewDate = (TextView) this.activity.findViewById(R.id.viewInputDate);
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        year = gregorianCalendar.get(Calendar.YEAR);
+        monthOfYear = gregorianCalendar.get(Calendar.MONTH);
+        dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH);
+        date = DateUtils.convertDateToString(gregorianCalendar);
+        textViewDate.setText(date);
     }
 
     public String getDate() {
@@ -83,10 +91,9 @@ public class DateWorker implements Worker {
         this.year = result.getInt("Year");
         this.monthOfYear = result.getInt("MonthOfYear") ;
         this.dayOfMonth = result.getInt("DayOfMonth");
-        TextView v = (TextView) this.activity.findViewById(R.id.viewInputDate);
         GregorianCalendar gregorianCalendar = new GregorianCalendar(year,monthOfYear,dayOfMonth);
         date = DateUtils.convertDateToString(gregorianCalendar);
-        v.setText(date);
+        textViewDate.setText(date);
         int days = (int) DateUtils.getDifferenceDays(gregorianCalendar);
         setOptionsDaysAfter(days);
     }

@@ -138,20 +138,23 @@ public class DBOperations {
             if(cursor.moveToFirst()){
                 while (cursor.isAfterLast() == false) {
                     Reminder reminder = new Reminder();
-                    reminder.setIdReminder(cursor.getInt(Reminder.ReminderEntry.INDEX_ENTRY_ID));
-                    reminder.setTitle(cursor.getString(Reminder.ReminderEntry.INDEX_TITLE));
-                    reminder.setNotes(cursor.getString(Reminder.ReminderEntry.INDEX_NOTES));
                     String date = cursor.getString(Reminder.ReminderEntry.INDEX_DATE);
                     GregorianCalendar gregorianCalendar = DateUtils.parserStringDate(date);
                     reminder.setDate(gregorianCalendar);
-                    String s = reminder.getDateToString();
-                    reminder.setDaysAfter(cursor.getInt(Reminder.ReminderEntry.INDEX_DAYS_AFTER));
-                    reminder.setHourRange(cursor.getInt(Reminder.ReminderEntry.INDEX_HOUR_RANGE));
-                    String photoPath = cursor.getString(Reminder.ReminderEntry.INDEX_PHOTO_PATH);
-                    String voiceNotePath = cursor.getString(Reminder.ReminderEntry.INDEX_VOICE_NOTE_PATH);
-                    reminder.setPhotoPath(photoPath);
-                    reminder.setVoiceNotePath(voiceNotePath);
-                    reminders.add(reminder);
+                    GregorianCalendar currentDate = new GregorianCalendar();
+                    if(gregorianCalendar.compareTo(currentDate)==1){
+                        reminder.setIdReminder(cursor.getInt(Reminder.ReminderEntry.INDEX_ENTRY_ID));
+                        reminder.setTitle(cursor.getString(Reminder.ReminderEntry.INDEX_TITLE));
+                        reminder.setNotes(cursor.getString(Reminder.ReminderEntry.INDEX_NOTES));
+                        reminder.setDaysAfter(cursor.getInt(Reminder.ReminderEntry.INDEX_DAYS_AFTER));
+                        reminder.setHourRange(cursor.getInt(Reminder.ReminderEntry.INDEX_HOUR_RANGE));
+                        String photoPath = cursor.getString(Reminder.ReminderEntry.INDEX_PHOTO_PATH);
+                        String voiceNotePath = cursor.getString(Reminder.ReminderEntry.INDEX_VOICE_NOTE_PATH);
+                        reminder.setPhotoPath(photoPath);
+                        reminder.setVoiceNotePath(voiceNotePath);
+                        reminder.defineDatesOfNotifications();
+                        reminders.add(reminder);
+                    }
                     cursor.moveToNext();
                 }
             }
@@ -159,7 +162,7 @@ public class DBOperations {
             e.printStackTrace();
         }
         Collections.sort(reminders);
-        Collections.reverse(reminders);
+        //Collections.reverse(reminders);
         return reminders;
     }
 
