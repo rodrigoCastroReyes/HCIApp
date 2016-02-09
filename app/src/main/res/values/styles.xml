@@ -2,7 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-
+        <item name="android:spinnerItemStyle">
+            @style/spinnerItemStyle
+        </item>
     </style>
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -13,5 +15,14 @@
         <item name="colorControlNormal">#c5c5c5</item>
         <item name="colorControlActivated">#2196f3</item>
         <item name="colorControlHighlight">#2196f3</item>
+    </style>
+    <style name="spinnerItemStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#656565</item>
+    </style>
+    <style name="spinnerDropDownItemStyle">
+        <item name="android:padding">20dp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#fff</item>
     </style>
 </resources>

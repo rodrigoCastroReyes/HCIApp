@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 });
                 Intent intent = new Intent(context, AdviceService.class);
                 intent.putExtra("Reminders",reminders);
-                startService(intent);
+                //startService(intent);
             }
         }
     }

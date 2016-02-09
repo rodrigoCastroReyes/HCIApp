@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.rodrigo.hciapp.CreateReminderActivity"
-    android:background="#eceaea">
+    tools:context="com.example.rodrigo.hciapp.CreateReminderActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarCreateReminder"
         android:layout_width="match_parent"
@@ -21,7 +20,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/wrapper"
         android:orientation="vertical"
-        android:background="#eceaea"
         android:layout_below="@+id/toolbarCreateReminder"
         android:layout_alignParentStart="true"
         android:weightSum="1"
@@ -35,10 +33,21 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:background="#fff"
-            android:elevation="5dp"
             android:layout_marginTop="16dp"
             android:layout_weight="0.25">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/inputTitle"
+                android:hint="Titulo"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:theme="@style/EditTextTheme"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,28 +70,20 @@
                 <EditText
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/inputTitle"
-                    android:hint="Titulo"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
+                    android:id="@+id/inputNotes"
+                    android:hint="Notas"
+                    android:layout_below="@+id/inputTitle"
+                    android:inputType="text|textMultiLine"
+                    android:layout_alignStart="@+id/inputTitle"
                     android:theme="@style/EditTextTheme"
-                    android:layout_weight="0.90"
+                    android:layout_weight="0.9"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp" />
+                    android:layout_marginRight="4dp"
+                    android:layout_gravity="center"
+                    android:gravity="fill_vertical" />
+
             </LinearLayout>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:id="@+id/inputNotes"
-                android:hint="Notas"
-                android:layout_below="@+id/inputTitle"
-                android:inputType="text|textMultiLine"
-                android:layout_alignStart="@+id/inputTitle"
-                android:theme="@style/EditTextTheme"
-                android:layout_weight="0.5"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -90,13 +91,11 @@
             android:layout_height="0dp"
             android:layout_weight="0.25"
             android:layout_gravity="center"
-            android:background="#fff"
             android:orientation="vertical"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
-            android:id="@+id/wrapperInputDate"
-            android:elevation="5dp" >
+            android:id="@+id/wrapperInputDate">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -104,7 +103,8 @@
                 android:orientation="horizontal"
                 android:layout_weight="0.50"
                 android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp">
+                android:layout_marginRight="4dp"
+                android:layout_gravity="center">
 
                 <ImageView
                     android:layout_width="0dp"
@@ -118,7 +118,7 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Fecha Limite"
                     android:id="@+id/textView13"
@@ -128,7 +128,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="4dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:gravity="fill_horizontal|fill_vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,10 +138,9 @@
                 android:id="@+id/wrapperParameters"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:background="#fff"
                 android:layout_weight="0.5"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:paddingBottom="8dp">
 
 
@@ -148,10 +148,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id = "@+id/wrapperDate"
-                    android:layout_weight="0.6"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginRight="8dp">
+                    android:layout_marginRight="24dp">
 
                     <ImageView
                         android:layout_width="0dp"
@@ -170,7 +170,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="28 de Enero 2016"
+                        android:text="28 de Enero"
                         android:id="@+id/viewInputDate"
                         android:onClick="setCalendar"
                         android:layout_gravity="center_vertical"
@@ -179,17 +179,18 @@
                         android:layout_weight="0.75"
                         android:autoText="false"
                         android:gravity="center_vertical"
-                        android:clickable="true" />
+                        android:clickable="true"
+                        android:layout_marginLeft="8dp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id = "@+id/wrapperHour"
-                    android:layout_weight="0.40"
+                    android:layout_weight="0.5"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="8dp">
+                    android:layout_marginRight="24dp">
 
                     <ImageView
                         android:layout_width="0dp"
@@ -216,7 +217,8 @@
                         android:layout_weight="0.75"
                         android:onClick="setTime"
                         android:gravity="center_vertical"
-                        android:clickable="true" />
+                        android:clickable="true"
+                        android:layout_marginLeft="8dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -224,16 +226,14 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.25"
-            android:background="#fff"
             android:orientation="vertical"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:id="@+id/wrapperInputNotifications"
-            android:elevation="5dp"
             android:layout_gravity="center">
 
             <LinearLayout
@@ -242,7 +242,8 @@
                 android:layout_weight="0.50"
                 android:orientation="horizontal"
                 android:layout_marginRight="4dp"
-                android:layout_marginLeft="4dp">
+                android:layout_marginLeft="4dp"
+                android:layout_gravity="center">
 
                 <ImageView
                     android:layout_width="0dp"
@@ -266,7 +267,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="4dp"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:gravity="fill_horizontal|fill_vertical" />
             </LinearLayout>
 
             <LinearLayout
@@ -286,7 +288,8 @@
                     android:layout_height="match_parent"
                     android:id="@+id/wrapperInputDaysAfter"
                     android:layout_weight="0.5"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp">
 
                     <ImageView
                         android:layout_width="0dp"
@@ -302,15 +305,17 @@
 
                     <Spinner
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/inputDaysAfter"
                         android:layout_weight="0.75"
                         android:entries="@array/days_after_array"
                         android:focusable="true"
                         android:prompt="@string/daysAfter_prompt"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:gravity="center_vertical|center_horizontal"
-                        android:spinnerMode="dialog" />
+                        android:spinnerMode="dialog"
+                        android:theme="@style/spinnerItemStyle"
+                        android:transitionGroup="false" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -318,7 +323,8 @@
                     android:layout_height="match_parent"
                     android:id="@+id/wrapperHourRange"
                     android:layout_weight="0.5"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="8dp">
 
                     <ImageView
                         android:layout_width="0dp"
@@ -334,47 +340,85 @@
 
                     <Spinner
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/inputHourRange"
                         android:layout_weight="0.75"
                         android:entries="@array/hour_range_array"
-                        android:layout_gravity="center_vertical"
+                        android:layout_gravity="center"
                         android:gravity="center_vertical|center_horizontal"
                         android:spinnerMode="dialog"
-                        android:prompt="@string/hourRange_prompt" />
+                        android:prompt="@string/hourRange_prompt"
+                        android:theme="@style/spinnerItemStyle" />
                 </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="#fff"
-        android:elevation="5dp"
-        android:layout_weight="0.25"
-            android:id="@+id/wrapperInputSensors">
-
-        <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Opcional:"
-            android:id="@+id/textView"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="0.3" />
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="0.25"
+            android:id="@+id/wrapperInputSensors">>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Opcional:"
+                android:id="@+id/textView"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="0.3" />
 
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/wrapperCamera"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:layout_weight="0.6">
 
+                    <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="Take Photo"
+                        android:id="@+id/btnTakePhoto"
+                        android:onClick="takePhotoHandle"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/roundedbutton"
+                        android:src="@drawable/ic_camera" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Tomar foto"
+                        android:id="@+id/textView2"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="4dp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView9"
+                    android:layout_weight="0.4" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

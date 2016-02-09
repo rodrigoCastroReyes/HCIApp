@@ -4,7 +4,7 @@
     tools:context="com.example.rodrigo.hciapp.ViewReminderActivity">
     <item
         android:id="@+id/adviceReminder"
-        android:icon="@mipmap/ic_map"
+        android:icon="@drawable/supermercados"
         app:showAsAction="ifRoom"
         android:title="Mapa">
     </item>
