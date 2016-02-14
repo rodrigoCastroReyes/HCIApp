@@ -19,6 +19,11 @@ public class Market implements Serializable{
 
     }
 
+    public Market setIdMarket(int idMarket) {
+        this.idMarket = idMarket;
+        return this;
+    }
+
     public Market(String name,String latitude, String longitude,String address){
         this.latitude = Double.valueOf(latitude);
         this.longitude = Double.valueOf(longitude);

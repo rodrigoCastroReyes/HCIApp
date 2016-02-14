@@ -101,21 +101,44 @@ public class DateUtils {
         return diferencia;
     }
 
+    public static long getDifference(GregorianCalendar date,boolean sameDay){
+        GregorianCalendar currentDate = new GregorianCalendar();
+        currentDate = new GregorianCalendar(currentDate.get(Calendar.YEAR),currentDate.get(Calendar.MONTH),currentDate.get(Calendar.DAY_OF_MONTH),0,0);
+        Date today = currentDate.getTime();
+        Date anotherDay =   date.getTime();
+        long diferencia = Math.abs(today.getTime() - anotherDay.getTime());
+        return diferencia;
+    }
+
     public static long getDifferenceDays(GregorianCalendar date){
         long diferencia = getDifference(date);
         long dias = diferencia / (1000 * 60 * 60 * 24);
         return dias;
     }
 
+    public static long getDifferenceDays(GregorianCalendar date,boolean sameDay){
+        long diferencia = getDifference(date,sameDay);
+        long dias = diferencia / (1000 * 60 * 60 * 24);
+        return dias;
+    }
+
     public static long getDifferenceHours(GregorianCalendar date){
         long diferencia = getDifference(date);
-        long hours = diferencia / (1000 * 60 * 60);
+        double div = diferencia / (1000 * 60 * 60);
+        long hours = (long) div;
         return hours;
     }
 
     public static long getDifferenceMinutes(GregorianCalendar date){
         long diferencia = getDifference(date);
-        long hours = diferencia / (1000 * 60 );
-        return hours;
+        long minutes = diferencia / (1000 * 60 );
+        return minutes;
     }
+
+    public static long getDifferenceSeconds(GregorianCalendar date){
+        long diferencia = getDifference(date);
+        long seconds = diferencia / (1000 );
+        return seconds;
+    }
+
 }

@@ -30,12 +30,14 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Reminder> reminders;
     private DBOperations dbOperations;
     private boolean isLoadedDB,isRunningService;
-
+    private ListView elements;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setToolBar();
+        elements = (ListView) findViewById(R.id.listViewReminder);
+        elements.setEmptyView(findViewById(android.R.id.empty));
         //savePreferences("isLoad", false);
         //savePreferences("isRunningService",false);
         dbOperations = new DBOperations(this);
@@ -117,13 +119,16 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_notifications:
+                Intent intent = new Intent(this,LastRemindersActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     private class LoaderReminders extends AsyncTask<Void, Void, ArrayList<Reminder>> {
@@ -141,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(final ArrayList<Reminder> reminders){
             if (!reminders.isEmpty()) {
-                final ListView elements = (ListView) findViewById(R.id.listViewReminder);
                 final RemindersAdapter adapter = new RemindersAdapter(context, -1, reminders);
                 elements.setAdapter(adapter);
                 elements.setOnItemClickListener(new AdapterView.OnItemClickListener() {

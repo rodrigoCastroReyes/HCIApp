@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.rodrigo.hciapp.CreateReminderActivity">
+    tools:context="com.example.rodrigo.hciapp.EditReminderActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbarCreateReminder"
+        android:id="@+id/toolbarEditReminder"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
@@ -17,12 +17,12 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/wrapper"
         android:orientation="vertical"
-        android:layout_below="@+id/toolbarCreateReminder"
-        android:layout_alignParentStart="true"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_below="@+id/toolbarEditReminder"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -376,10 +376,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="match_parent"
                 android:id="@+id/imageViewPhoto"
-                android:layout_gravity="center"
-                android:visibility="visible" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
     </LinearLayout>

@@ -21,6 +21,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private SQLiteDatabase database;
     private Context context;
 
+    public SQLiteDatabase getDatabase() {
+        return database;
+    }
+
     public DBHelper(Context context) {
         super(context, DB_NAME, null, SCHEME_VERSION);
         database = this.getWritableDatabase();

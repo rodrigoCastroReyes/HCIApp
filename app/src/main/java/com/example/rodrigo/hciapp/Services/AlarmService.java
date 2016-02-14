@@ -33,12 +33,16 @@ public class AlarmService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Bundle data = intent.getExtras();
-        if(data!=null){
-            activeReminders = (ArrayList < Reminder >) data.get("Reminders");
-            thread.setActiveReminders(activeReminders);
-            if (thread.getState() == Thread.State.NEW ){
-                thread.start();
+        if(intent!=null){
+            Bundle data = intent.getExtras();
+            if(data!=null){
+                activeReminders = (ArrayList < Reminder >) data.get("Reminders");
+                if(activeReminders!=null) {
+                    thread.setActiveReminders(activeReminders);
+                    if (thread.getState() == Thread.State.NEW) {
+                        thread.start();
+                    }
+                }
             }
         }
         return START_STICKY;
@@ -54,7 +58,7 @@ public class AlarmService extends Service {
         private NotificationThread notificationThread;
         private ArrayList <Reminder> activeReminders ;
         private DBOperations dbOperations;
-        private final long hourMax= 1;
+        private final long hourMax= 2;
 
         public ManagerThread(Context context){
             dbOperations = new DBOperations(context);
@@ -69,7 +73,7 @@ public class AlarmService extends Service {
 
         public void run() {
             Reminder reminder;
-            long delay = 1*60*60*1000;
+            long delay = (long) (2*60*1000);
             try {
                 while (true) {
                     if(!activeReminders.isEmpty()) {
@@ -93,7 +97,8 @@ public class AlarmService extends Service {
                 for(GregorianCalendar date: datesOfNotifications){
                     currenDate = new GregorianCalendar();//fecha actual
                     if(date.compareTo(currenDate)==1) {//comprobar si la fecha del recordatorio es mayor a la fecha actual
-                        difHours = DateUtils.getDifferenceHours(date);
+                        //difHours = DateUtils.getDifferenceHours(date);
+                        difHours = DateUtils.getDifferenceMinutes(date);
                         if(difHours >= 0 && difHours <= hourMax){
                             launchNotification(date,reminder);//lanzar una notificion por cada 'date'
                         }
@@ -104,12 +109,12 @@ public class AlarmService extends Service {
 
         public void launchNotification(GregorianCalendar date, Reminder reminder){
             //long difMinutes=2;
-            long difMinutes;
-            difMinutes = DateUtils.getDifferenceMinutes(date);
+            long difSeconds;
+            difSeconds = DateUtils.getDifferenceSeconds(date);
             Bundle data = new Bundle();
             data.putString("Title", reminder.getTitle());
             data.putString("Message", reminder.getNotes());
-            data.putLong("Delay", difMinutes * 60 * 1000);
+            data.putLong("Delay", difSeconds* 1000);
             data.putSerializable("Reminder",reminder);
             notificationThread.sheduleTask(data);
         }

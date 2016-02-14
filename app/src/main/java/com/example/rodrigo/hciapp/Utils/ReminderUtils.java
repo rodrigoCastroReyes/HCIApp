@@ -15,6 +15,7 @@ public class ReminderUtils {
 
     public static int getColorByDate(GregorianCalendar date){
         long dias = DateUtils.getDifferenceDays(date);
+        
         if(dias >= 0 && dias < 1 ){
             return Color.rgb(244,11,11);//color rojo
         }

@@ -19,6 +19,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Observable;
+import java.util.Observer;
 
 import static android.R.layout.simple_spinner_item;
 
@@ -34,6 +36,7 @@ public class DateWorker implements Worker {
     private TextView textViewDate;
     private Spinner inputDaysAfter;
     private ArrayList<Integer> optionsDaysAfter;
+    private DateObservable dateObservable;
 
     public DateWorker(Activity activity,int code){
         dateFragment = new DatePickerFragment();
@@ -47,6 +50,12 @@ public class DateWorker implements Worker {
         dayOfMonth = gregorianCalendar.get(Calendar.DAY_OF_MONTH);
         date = DateUtils.convertDateToString(gregorianCalendar);
         textViewDate.setText(date);
+        dateObservable = new DateObservable();
+        dateObservable.dateChanged(year,monthOfYear,dayOfMonth);
+    }
+
+    public void setObserver(Observer observer){
+        this.dateObservable.addObserver(observer);
     }
 
     public String getDate() {
@@ -83,7 +92,7 @@ public class DateWorker implements Worker {
 
     @Override
     public void launchTask() {
-        dateFragment.show(this.activity.getFragmentManager(),"DatePickerFragment");
+        dateFragment.show(this.activity.getFragmentManager(), "DatePickerFragment");
     }
 
     @Override
@@ -94,8 +103,9 @@ public class DateWorker implements Worker {
         GregorianCalendar gregorianCalendar = new GregorianCalendar(year,monthOfYear,dayOfMonth);
         date = DateUtils.convertDateToString(gregorianCalendar);
         textViewDate.setText(date);
-        int days = (int) DateUtils.getDifferenceDays(gregorianCalendar);
+        int days = (int) DateUtils.getDifferenceDays(gregorianCalendar,true);
         setOptionsDaysAfter(days);
+        dateObservable.dateChanged(year, monthOfYear, dayOfMonth);
     }
 
     public void setOptionsDaysAfter(int days){
@@ -122,6 +132,23 @@ public class DateWorker implements Worker {
         return this.codeTask;
     }
 
+    private class DateObservable extends Observable{
+        Bundle data ;
+
+        private DateObservable(){
+            this.setChanged();
+        }
+
+        public void dateChanged(int year,int month,int day){
+            data = new Bundle();
+            data.putInt("Year",year);
+            data.putInt("Month",month);
+            data.putInt("Day",day);
+            this.setChanged();
+            this.notifyObservers(data);
+        }
+    }
+
     private class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -138,8 +165,9 @@ public class DateWorker implements Worker {
             Bundle results = new Bundle();
             results.putInt("Year",year);
             results.putInt("MonthOfYear",monthOfYear);
-            results.putInt("DayOfMonth",dayOfMonth);
+            results.putInt("DayOfMonth", dayOfMonth);
             resolveTask(results);
         }
     }
+
 }

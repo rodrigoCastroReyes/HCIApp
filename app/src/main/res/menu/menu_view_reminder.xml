@@ -9,6 +9,6 @@
         android:title="Mapa">
     </item>
 
-    <item android:id="@+id/action_settings" android:title="Eliminar"
+    <item android:id="@+id/action_eliminate" android:title="Eliminar"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -96,6 +96,7 @@ public class AdviceService extends Service {
                     userLocation = locationHelper.getRecentLocation();
                     marketsCloser = (ArrayList<Market>)marketsHelper.findMarketsCloser(userLocation,ratio);
                     isThereMarketsCloser = !marketsCloser.isEmpty();
+
                     if(isThereReminders && isThereMarketsCloser){
                         notifyTo(userLocation,marketsCloser);
                     }
@@ -111,7 +112,7 @@ public class AdviceService extends Service {
 
         public void notifyTo(Location userLocation,ArrayList<Market> marketsCloser){
             Bundle data = new Bundle();
-            data.putString("Title","Recuerda!");
+            data.putString("Title","Recordatorios Pendientes!");
             data.putString("Message","Existen Supermercados cerca!!");
             data.putParcelable("UserLocation",userLocation);
             data.putSerializable("MarketsCloser",marketsCloser);

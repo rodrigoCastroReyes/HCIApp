@@ -15,15 +15,44 @@
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true" />
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"
-        tools:context=".MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_weight="0.94"
-        android:layout_below="@+id/adviceReminderToolBar"
-        android:layout_alignEnd="@+id/adviceReminderToolBar" />
+        android:layout_height="match_parent">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            tools:context=".MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_weight="0.94"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/map"
+            android:gravity="center_horizontal|bottom"
+            android:background="#2196f3"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1km a la redonda"
+                android:id="@+id/textView"
+                android:layout_alignBottom="@+id/map"
+                android:layout_centerHorizontal="true"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="#fff" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

@@ -44,6 +44,10 @@ public class DBOperations {
         return dataBase.insert(Market.MarketEntry.TABLE_NAME, null, generateValuesMarket(market));
     }
 
+    public void updateReminder(ContentValues values,long id){
+        int update = dbHelper.getDatabase().update(Reminder.ReminderEntry.TABLE_NAME, values, Reminder.ReminderEntry.COLUMN_ENTRY_ID + "=" + id, null);
+    }
+
     public void insertMarkets(){
         insertMarket( new Market("Supermaxi", "-2.17099786", "-79.9223557", "Av. Rodrigo Chávez Gonzáles Etapa III Manzana 270 Solar 1"));
         insertMarket( new Market("Supermaxi", "-2.163201", "-79.92429", "CC La Piazza Ceibos Avenue Abdon Calderon Munoz"));
@@ -126,8 +130,12 @@ public class DBOperations {
         values.put(Market.MarketEntry.COLUMN_NAME,market.getName());
         values.put(Market.MarketEntry.COLUMN_LATITUDE,market.getLatitude());
         values.put(Market.MarketEntry.COLUMN_LONGITUDE,market.getLongitude());
-        values.put(Market.MarketEntry.COLUMN_ADDRESS,market.getAddress());
+        values.put(Market.MarketEntry.COLUMN_ADDRESS, market.getAddress());
         return values;
+    }
+
+    public void removeReminder(long id){
+        final int delete = dbHelper.getDatabase().delete(Reminder.ReminderEntry.TABLE_NAME, Reminder.ReminderEntry.COLUMN_ENTRY_ID + "=" + id,null);
     }
 
     public ArrayList<Reminder> getActiveReminders(){
@@ -142,7 +150,47 @@ public class DBOperations {
                     GregorianCalendar gregorianCalendar = DateUtils.parserStringDate(date);
                     reminder.setDate(gregorianCalendar);
                     GregorianCalendar currentDate = new GregorianCalendar();
-                    if(gregorianCalendar.compareTo(currentDate)==1){
+                    String state = cursor.getString(Reminder.ReminderEntry.INDEX_ESTADO);
+                    /*if(state.compareTo("RESOLVED") == 0 ||state.compareTo("resolved") == 0){
+                        continue;
+                    }*/
+                    if(gregorianCalendar.compareTo(currentDate)==1  ){
+                        reminder.setIdReminder(cursor.getInt(Reminder.ReminderEntry.INDEX_ENTRY_ID));
+                        reminder.setTitle(cursor.getString(Reminder.ReminderEntry.INDEX_TITLE));
+                        reminder.setNotes(cursor.getString(Reminder.ReminderEntry.INDEX_NOTES));
+                        reminder.setDaysAfter(cursor.getInt(Reminder.ReminderEntry.INDEX_DAYS_AFTER));
+                        reminder.setHourRange(cursor.getInt(Reminder.ReminderEntry.INDEX_HOUR_RANGE));
+                        String photoPath = cursor.getString(Reminder.ReminderEntry.INDEX_PHOTO_PATH);
+                        String voiceNotePath = cursor.getString(Reminder.ReminderEntry.INDEX_VOICE_NOTE_PATH);
+                        reminder.setPhotoPath(photoPath);
+                        reminder.setVoiceNotePath(voiceNotePath);
+                        reminder.defineDatesOfNotifications();
+                        reminders.add(reminder);
+                    }
+                    cursor.moveToNext();
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        Collections.sort(reminders);
+        //Collections.reverse(reminders);
+        return reminders;
+    }
+
+    public ArrayList<Reminder> getInactiveReminders(){
+        ArrayList<Reminder> reminders = new ArrayList<Reminder>();
+        try{
+            SQLiteDatabase dataBase = dbHelper.getReadableDatabase();
+            Cursor cursor = dataBase.query(Reminder.ReminderEntry.TABLE_NAME, null, null, null, null, null, null);
+            if(cursor.moveToFirst()){
+                while (cursor.isAfterLast() == false) {
+                    Reminder reminder = new Reminder();
+                    String date = cursor.getString(Reminder.ReminderEntry.INDEX_DATE);
+                    GregorianCalendar gregorianCalendar = DateUtils.parserStringDate(date);
+                    reminder.setDate(gregorianCalendar);
+                    GregorianCalendar currentDate = new GregorianCalendar();
+                    if(gregorianCalendar.compareTo(currentDate)==-1){
                         reminder.setIdReminder(cursor.getInt(Reminder.ReminderEntry.INDEX_ENTRY_ID));
                         reminder.setTitle(cursor.getString(Reminder.ReminderEntry.INDEX_TITLE));
                         reminder.setNotes(cursor.getString(Reminder.ReminderEntry.INDEX_NOTES));
@@ -173,6 +221,7 @@ public class DBOperations {
         if(cursor.moveToFirst()){
             while (cursor.isAfterLast() == false) {
                 Market market = new Market();
+                market.setIdMarket(cursor.getInt(Market.MarketEntry.INDEX_ENTRY_ID));
                 market.setName(cursor.getString(Market.MarketEntry.INDEX_NAME));
                 market.setLatitude(Double.valueOf(cursor.getString(Market.MarketEntry.INDEX_LATITUDE)));
                 market.setLongitude(Double.valueOf(cursor.getString(Market.MarketEntry.INDEX_LONGITUDE)));

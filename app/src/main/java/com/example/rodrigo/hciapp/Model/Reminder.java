@@ -41,6 +41,10 @@ public class Reminder implements Serializable,Comparable {
         voiceNotePath = "";
     }
 
+    public long getIdReminder() {
+        return idReminder;
+    }
+
     public void setIdReminder(long idReminder) {
         this.idReminder = idReminder;
     }

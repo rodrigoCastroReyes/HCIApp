@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HCIApp</string>
+    <string name="app_name">remindMe</string>
     <string name="hello_world">Eres una cerdita :)</string>
     <string name="action_notifications">Recordatorios Pasados</string>
     <string name="action_settings">Configuracion</string>
@@ -11,13 +11,10 @@
     </string-array>
     <string-array name="hour_range_array">
         <item>Hora limite</item>
-        <item>cada 2 horas</item>
-        <item>cada 4 horas</item>
-        <item>cada 6 horas</item>
-        <item>cada 8 horas</item>
-        <item>cada 12 horas</item>
-        <item>cada 18 horas</item>
     </string-array>
     <string name="daysAfter_prompt">Escoger dias antes</string>
     <string name="hourRange_prompt">Escoger rango de horas</string>
+    <string name="title_activity_last_reminders">LastRemindersActivity</string>
+    <string name="title_activity_routes_advice">RoutesAdviceActivity</string>
+    <string name="title_activity_edit_reminder">EditReminderActivity</string>
 </resources>

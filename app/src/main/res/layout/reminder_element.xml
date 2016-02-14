@@ -43,16 +43,16 @@
                 android:paddingLeft="2dp" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="25dp"
+                    android:layout_height="35dp"
                     android:id = "@+id/dateLayout"
                     android:orientation="horizontal"
-                    android:layout_weight="0.7"
+                    android:layout_weight="0.45"
                     android:layout_gravity="center">
 
                     <ImageView
@@ -82,10 +82,10 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="25dp"
+                    android:layout_height="35dp"
                     android:id = "@+id/timeLayout"
                     android:orientation="horizontal"
-                    android:layout_weight="0.3"
+                    android:layout_weight="0.25"
                     android:layout_gravity="center">
 
                     <ImageView
@@ -111,6 +111,14 @@
                         android:layout_marginLeft="4dp" />
 
                 </LinearLayout>
+
+                <Switch
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:text="New Switch"
+                    android:id="@+id/switch1"
+                    android:layout_weight="0.30" />
+
             </LinearLayout>
 
         </LinearLayout>

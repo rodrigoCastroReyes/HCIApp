@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,12 +35,14 @@ import java.lang.reflect.Array;
 import java.security.SecurityPermission;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Observer;
 
 import static android.graphics.Color.rgb;
 
 public class CreateReminderActivity extends AppCompatActivity {
     private Worker cameraWorker,recorderWorker,timeWorker,dateWorker;
     private DBOperations dbOperations;
+
     private EditText inputTitle,inputNotes;
     private Spinner inputDaysAfter,inputHourRange;
     private String photoPath  = null;
@@ -55,7 +59,24 @@ public class CreateReminderActivity extends AppCompatActivity {
         this.setToolbar();
 
         inputTitle = (EditText) findViewById(R.id.inputTitle);
+        inputTitle.addTextChangedListener(new TextValidator(inputTitle) {
+            @Override
+            public void validate(EditText editText, String text) {
+                //Implementamos la validación que queramos
+                if( text.length() == 0 )
+                    inputTitle.setError( "Campo requerido" );
+            }
+        });
+
         inputNotes = (EditText) findViewById(R.id.inputNotes);
+        inputTitle.addTextChangedListener(new TextValidator(inputTitle) {
+            @Override
+            public void validate(EditText editText, String text) {
+                //Implementamos la validación que queramos
+                if( text.length() == 0 )
+                    inputTitle.setError( "Campo requerido" );
+            }
+        });
 
         inputDaysAfter = (Spinner)findViewById(R.id.inputDaysAfter);
         inputHourRange = (Spinner)findViewById(R.id.inputHourRange);
@@ -64,6 +85,7 @@ public class CreateReminderActivity extends AppCompatActivity {
         recorderWorker = new RecorderVoiceWorker(this,REQUEST_RECORD_VOICENOTE);
         timeWorker = new TimeWorker(this,REQUEST_GET_TIME);
         dateWorker = new DateWorker(this,REQUEST_GET_DATE);
+        ((DateWorker)dateWorker).setObserver((Observer) timeWorker);
 
         dbOperations = new DBOperations(this);
 
@@ -194,4 +216,27 @@ public class CreateReminderActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public abstract class TextValidator implements TextWatcher {
+        private final EditText editText;
+
+        public TextValidator(EditText editText) {
+            this.editText = editText;
+        }
+
+        public abstract void validate(EditText editText, String text);
+
+        @Override
+        final public void afterTextChanged(Editable s) {
+            String text = editText.getText().toString();
+            validate(editText, text);
+        }
+
+        @Override
+        final public void beforeTextChanged(CharSequence s, int start, int count, int after) { /* Don't care */ }
+
+        @Override
+        final public void onTextChanged(CharSequence s, int start, int before, int count) { /* Don't care */ }
+    }
+
 }
